@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}查询{% endblock %}
+
+{% block page_content %}
+
+<div class="container">
+<div class="page-header">
+    <h1>策略查询</h1>
+</div>
+<table class="table table-hover">
+  <caption>策略信息</caption>
+  <thead>
+    <tr>
+      <th>差价</th>
+      <th>参考时间</th>
+      <th>出价时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for data in action_data %}
+    <tr>
+      <td> {{data.diff}} </td>
+      <td> {{data.refer_time}} </td>
+      <td> {{data.bid_time}} </td>
+      <td>  <a href={{ url_for('main.Edit_action_data',device_id=data.id) }}> {{data.id}} </a>  </td>
+    </tr>
+     {% endfor %}
+
+  </tbody>
+</table>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

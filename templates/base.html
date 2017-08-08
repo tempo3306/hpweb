@@ -1,0 +1,126 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}沪牌第一枪{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar-default navbar-static-top " role="navigation" id="menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="bbutton" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">沪牌第一枪</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('main.index') }}">主页</a></li>
+
+                {% if current_user.can(Permission.SEARCH) %}
+                <li><a href="{{ url_for('main.info', username=current_user.username) }}">信息查询</a></li>
+                {% endif %}
+                {% if current_user.can(Permission.SEARCH) %}
+                <li><a href="{{ url_for('main.file_upload', username=current_user.username) }}">上传</a></li>
+                {% endif %}
+
+
+				        {% if current_user.can(Permission.EDIT) %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                         创建  <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('main.bid_action') }}">策略</a></li>
+                        <li><a href="{{ url_for('main.bid_data') }}">标书信息</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+
+				        {% if current_user.can(Permission.EDIT) %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                       查询 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('main.Inquiry_action') }}">修改策略</a></li>
+                        <li><a href="{{ url_for('main.Inquiry_data') }}">修改标书信息</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+
+                <!--{% if current_user.is_administrator %}-->
+                <!--<li><a href="{{ url_for('admin.index') }}">管理</a></li>      &lt;!&ndash;调用url_for('index') 得到的结果是\&ndash;&gt;-->
+                <!--{% endif %}-->
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                {% if current_user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ current_user.gravatar(size=18) }}">
+                        Account <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
+
+                        <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Header -->
+
+<!--&lt;!&ndash; Header &ndash;&gt;-->
+<!--<div id="header">-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="col-md-4">-->
+                <!--<h1>Authentiq-->
+                    <!--<small>BETA</small>-->
+                <!--</h1>-->
+
+                <!--<p class="lead">Strong authentication, without the passwords.</p>-->
+
+                <!--&lt;!&ndash;<a href="https://dashboard.authentiq.com/" class="btn btn-cta btn-default btn-outline">Get started</a>&ndash;&gt;-->
+
+                <!--<div class="spacer double">&nbsp;</div>-->
+            <!--</div>-->
+
+            <!--<div class="col-md-8 no-padding">-->
+                <!--&lt;!&ndash;<object type="image/svg+xml" data="./A-uthentiq_files/hero-animation.svg" id="hero-animation" class="img-responsive" alt="Authentiq Overview">&ndash;&gt;-->
+                <!--&lt;!&ndash;fallback&ndash;&gt;-->
+                <!--&lt;!&ndash; <img src="https://www.authentiq.com/images/homepage/hero-animation-autoplay.svg" class="img-responsive" alt="Authentiq Overview" /> &ndash;&gt;-->
+                <!--</object>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+{% endblock %}
+
+
+{% block content %}
+{{ super() }}
+{% block page_content %}{% endblock %}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+{{ moment.include_moment() }}
+
+{% endblock %}

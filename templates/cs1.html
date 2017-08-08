@@ -1,0 +1,160 @@
+
+<title>沪牌第一枪</title>
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Flasky</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css?bootstrap=3.3.7.1.dev1" rel="stylesheet">
+
+<link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="/static/styles.css">
+<link rel="stylesheet" type="text/css" href="/static/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/static/flexslider.css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
+
+  </head>
+  <body>
+    
+<div class="navbar  navbar-inverse " role="navigation" id="menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">PaiPai</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">主页</a></li>
+
+                
+
+
+
+				        
+
+				        
+
+                
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                
+                <li><a href="/auth/login">Log In</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+    
+   <div class="home-sec" id="home" >
+	   <div class="overlay">
+
+	<div class="container">
+	   <div class="row text-center " >
+
+		   <div class="col-lg-12  col-md-12 col-sm-12">
+
+			<div class="flexslider set-flexi" id="main-section" >
+				<ul class="slides move-me">
+					<!-- Slider 01 -->
+					<li>
+						  <h3>Delivering Quality Education</h3>
+					   <h1>THE UNIQUE METHOD</h1>
+						<a  href="#features-sec" class="btn btn-info btn-lg" >
+							GET AWESOME
+						</a>
+						 <a  href="#features-sec" class="btn btn-success btn-lg" >
+							FEATURE LIST
+						</a>
+					</li>
+					<!-- End Slider 01 -->
+
+					<!-- Slider 02 -->
+					<li>
+						<h3>Delivering Quality Education</h3>
+					   <h1>UNMATCHED APPROACH</h1>
+						 <a  href="#features-sec" class="btn btn-primary btn-lg" >
+						   GET AWESOME
+						</a>
+						 <a  href="#features-sec" class="btn btn-danger btn-lg" >
+							FEATURE LIST
+						</a>
+					</li>
+					<!-- End Slider 02 -->
+
+					<!-- Slider 03 -->
+					<li>
+						<h3>Delivering Quality Education</h3>
+					   <h1>AWESOME FACULTY PANEL</h1>
+						 <a  href="#features-sec" class="btn btn-default btn-lg" >
+							GET AWESOME
+						</a>
+						 <a  href="#features-sec" class="btn btn-info btn-lg" >
+							FEATURE LIST
+						</a>
+					</li>
+					<!-- End Slider 03 -->
+				</ul>
+			</div>
+		</div>
+
+		   </div>
+			</div>
+	   </div>
+
+   </div>
+
+
+
+<div class="container">
+    
+</div>
+
+
+
+    
+
+
+    <script src="static/bootstrap/jquery.min.js?bootstrap=3.3.7.1.dev1"></script>
+    <script src="static/bootstrap/js/bootstrap.min.js?bootstrap=3.3.7.1.dev1"></script>
+<script src="static/custom.js"> </script>
+<script src="static/jquery-1.10.2.js"> </script>
+<script src="static/jquery.easing.min.js"> </script>
+<script src="static/jquery.flexslider.js"> </script>
+<script src="static/jquery.scrollReveal.js"> </script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
+<script>
+moment.locale("en");
+function flask_moment_render(elem) {
+    $(elem).text(eval('moment("' + $(elem).data('timestamp') + '").' + $(elem).data('format') + ';'));
+    $(elem).removeClass('flask-moment').show();
+}
+function flask_moment_render_all() {
+    $('.flask-moment').each(function() {
+        flask_moment_render(this);
+        if ($(this).data('refresh')) {
+            (function(elem, interval) { setInterval(function() { flask_moment_render(elem) }, interval); })(this, $(this).data('refresh'));
+        }
+    })
+}
+$(document).ready(function() {
+    flask_moment_render_all();
+});
+</script>
+
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.min.js"></script>
+
+
+  </body>
+</html>

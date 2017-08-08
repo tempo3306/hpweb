@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+</div>
+<div>
+    {% if current_user.can(Permission.WRITE_ARTICLES) %}
+    {{ wtf.quick_form(form) }}
+    {% endif %}
+</div>
+<div class="post-tabs">
+    <ul class="nav nav-tabs">
+        <li{% if not show_followed and not show_new %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">ALL</a></li>
+        {% if current_user.is_authenticated %}
+        <li{% if show_followed and not show_new %} class="active"{% endif %}><a href="{{ url_for('.show_followed') }}">Followers</a></li>
+
+
+
+        <li {% if show_new and not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_new') }}">New</a></li>
+
+
+        {% endif %}
+    </ul>
+    {% include '_posts.html' %}
+</div>
+{% for post in posts2 %}
+<p>
+  {{post.author.nickname}} says: <b>{{post.body}}</b>
+</p>
+{% endfor %}
+<div class="data_table">
+<h1>NBA_DATA</h1>
+<table class='NBA'>
+<thead>
+<th>ID</th><th>Ãû×Ö</th>
+</thead>
+<tbody>
+{% for data in contents %}
+<tr>
+{% for content in data %}
+    <td>{{content}</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</tbody>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
+
+
+

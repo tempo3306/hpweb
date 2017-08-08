@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky - Edit Post{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="page-header">
+        <h1>拍牌信息</h1>
+    </div>
+
+    <table class="table table-hover">
+        <caption>标书信息</caption>
+        <thead>
+        <tr>
+            <th>身份证</th>
+            <th>标书号</th>
+            <th>密码</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in action_data %}
+        <tr>
+            <td> {{data.IDnumber}}</td>
+            <td> {{data.BIDnumber}}</td>
+            <td> {{data.BIDpassword}}</td>
+            <td><a href={{ url_for('main.Edit_BID_data',device_id=data.id) }}> {{data.id}} </a>  </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+<table class="table table-hover">
+  <caption>策略信息</caption>
+  <thead>
+    <tr>
+      <th>差价</th>
+      <th>参考时间</th>
+      <th>出价时间</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for data in action_data %}
+    <tr>
+      <td> {{data.diff}} </td>
+      <td> {{data.refer_time}} </td>
+      <td> {{data.bid_time}} </td>
+      <td>  <a href={{ url_for('main.Edit_action_data',device_id=data.id) }}> {{data.id}} </a>  </td>
+    </tr>
+     {% endfor %}
+
+  </tbody>
+</table>
+</div>
+
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}

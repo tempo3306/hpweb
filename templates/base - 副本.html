@@ -1,0 +1,250 @@
+<title>沪牌第一枪</title>
+{% extends "bootstrap/base.html" %}
+
+{% block title %}PaiPai{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">-->
+<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome.min.css') }}">-->
+<!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flexslider.css') }}">-->
+<!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />-->
+<link href='https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css' rel='stylesheet' type='text/css' />
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar-default navbar-static-top " role="navigation" id="menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="bbutton" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">PaiPai</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('main.index') }}">主页</a></li>
+
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('main.file_upload', username=current_user.username) }}">上传</a></li>
+                {% endif %}
+
+
+
+				        {% if current_user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                         创建  <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('main.bid_action') }}">策略</a></li>
+                        <li><a href="{{ url_for('main.bid_data') }}">标书信息</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+
+				        {% if current_user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                       查询 <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('main.Inquiry_action') }}">修改策略</a></li>
+                        <li><a href="{{ url_for('main.Inquiry_data') }}">修改标书信息</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('admin.index') }}">管理</a></li>      <!--调用url_for('index') 得到的结果是\-->
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                {% if current_user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ current_user.gravatar(size=18) }}">
+                        Account <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('auth.change_password') }}">Change Password</a></li>
+
+                        <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+{{ super() }}
+<div class="container">
+	   <div class="row text-center " >
+
+		   <div class="col-lg-12  col-md-12 col-sm-12">
+
+			<div class="flexslider set-flexi" id="main-section" >
+				<ul class="slides move-me">
+					<!-- Slider 01 -->
+					<li>
+						  <h3>Delivering Quality Education</h3>
+					   <h1>THE UNIQUE METHOD</h1>
+						<a  href="#features-sec" class="btn btn-info btn-lg" >
+							GET AWESOME
+						</a>
+						 <a  href="#features-sec" class="btn btn-success btn-lg" >
+							FEATURE LIST
+						</a>
+					</li>
+					<!-- End Slider 01 -->
+
+					<!-- Slider 02 -->
+					<li>
+						<h3>Delivering Quality Education</h3>
+					   <h1>UNMATCHED APPROACH</h1>
+						 <a  href="#features-sec" class="btn btn-primary btn-lg" >
+						   GET AWESOME
+						</a>
+						 <a  href="#features-sec" class="btn btn-danger btn-lg" >
+							FEATURE LIST
+						</a>
+					</li>
+					<!-- End Slider 02 -->
+
+					<!-- Slider 03 -->
+					<li>
+						<h3>Delivering Quality Education</h3>
+					   <h1>AWESOME FACULTY PANEL</h1>
+						 <a  href="#features-sec" class="btn btn-default btn-lg" >
+							GET AWESOME
+						</a>
+						 <a  href="#features-sec" class="btn btn-info btn-lg" >
+							FEATURE LIST
+						</a>
+					</li>
+					<!-- End Slider 03 -->
+				</ul>
+			</div>
+           </div>
+       </div>
+</div>
+
+
+<div  class="tag-line" >
+	 <div class="container">
+	   <div class="row  text-center" >
+
+		   <div class="col-lg-12  col-md-12 col-sm-12">
+
+	<h2 data-scroll-reveal="enter from the bottom after 0.1s" ><i class="fa fa-circle-o-notch"></i> WELCOME TO THE EDU-CENTER <i class="fa fa-circle-o-notch"></i> </h2>
+			   </div>
+		   </div>
+		 </div>
+
+</div>
+
+
+
+<!--HOME SECTION TAG LINE END-->
+	 <div id="features-sec" class="container set-pad" >
+		 <div class="row text-center">
+			 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+				 <h1 data-scroll-reveal="enter from the bottom after 0.2s"  class="header-line">FEATURE LIST </h1>
+				 <p data-scroll-reveal="enter from the bottom after 0.3s" >
+				  Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+					Aenean commodo.
+					 Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+					Aenean commodo.
+					 </p>
+			 </div>
+
+		 </div>
+		 <!--/.HEADER LINE END-->
+
+
+	   <div class="row" >
+
+
+			 <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s">
+				 <div class="about-div">
+				 <i class="fa fa-paper-plane-o fa-4x icon-round-border" ></i>
+			   <h3 >Quality Education</h3>
+			 <hr />
+				   <hr />
+			   <p >
+				   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+					Aenean commodo .
+
+			   </p>
+		   <a href="#" class="btn btn-info btn-set"  >ASK THE EXPERT</a>
+			</div>
+			   </div>
+			   <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.5s">
+				 <div class="about-div">
+				 <i class="fa fa-bolt fa-4x icon-round-border" ></i>
+			   <h3 >SYSTEMATIC APPROACH</h3>
+			 <hr />
+				   <hr />
+			   <p >
+				   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+					Aenean commodo .
+
+			   </p>
+		   <a href="#" class="btn btn-info btn-set"  >ASK THE EXPERT</a>
+			</div>
+			   </div>
+			 <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.6s">
+				 <div class="about-div">
+				 <i class="fa fa-magic fa-4x icon-round-border" ></i>
+			   <h3 >ONE TO ONE STUDY</h3>
+			 <hr />
+				   <hr />
+			   <p >
+				   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+					Aenean commodo .
+
+			   </p>
+		   <a href="#" class="btn btn-info btn-set"  >ASK THE EXPERT</a>
+			</div>
+			   </div>
+
+
+		   </div>
+		 </div>
+
+
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+{% block page_content %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="/static/jquery-1.10.2.js"></script>
+<script src="/static/bootstrap.js"></script>
+<script src="/static/jquery.flexslider.js"></script>
+<script src="/static/scrollReveal.js"></script>
+<script src="/static/jquery.easing.min.js"></script>
+<script src="/static/custom.js"></script>
+{{ moment.include_moment() }}
+
+{% endblock %}
