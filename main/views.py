@@ -4,16 +4,18 @@ from flask_login import login_required, current_user
 from flask_sqlalchemy import get_debug_queries
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, \
-    CommentForm, BulletinForm,FileForm,BID_dataForm,BID_actionForm,InquiryForm,\
-Edit_BID_dataForm,Edit_BID_actionForm
+    CommentForm, BulletinForm, FileForm, BID_dataForm, BID_actionForm, InquiryForm, \
+    Edit_BID_dataForm, Edit_BID_actionForm
 
 from .. import db
-from ..models import User, Role, Permission,Auction_data,BID_action
+from ..models import User, Role, Permission, Auction_data, BID_action
 from ..info_models import Article
 from ..decorators import admin_required, permission_required
 import os
 from flask_admin import Admin, BaseView, expose
 from flask_admin.contrib.sqla import ModelView
+import xlrd, xlwt
+
 
 @main.after_app_request
 def after_request(response):
@@ -39,11 +41,11 @@ def server_shutdown():
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-
     return render_template('index.html')
 
     # return render_template('index.html',  posts=posts,
     #                        show_followed=show_followed, show_new=show_new, pagination=pagination)
+
 
 @main.route('/user/<username>')
 def user(username):
@@ -55,9 +57,6 @@ def user(username):
     posts = pagination.items
     return render_template('user.html', user=user, posts=posts,
                            pagination=pagination)
-
-
-
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -127,8 +126,6 @@ def post(id):
                            comments=comments, pagination=pagination)
 
 
-
-
 ####点击后设置cookie,触发界面判断
 @main.route('/all')
 @login_required  #########要求登录
@@ -146,8 +143,6 @@ def show_new():
     resp.set_cookie('show_new', '1', max_age=30 * 24 * 60 * 60)
     resp.set_cookie('show_followed', '', max_age=30 * 24 * 60 * 60)
     return resp
-
-
 
 
 '''
@@ -186,9 +181,10 @@ def moderate_disable(id):
                             page=request.args.get('page', 1, type=int)))
 '''
 
+
 # 上传
 
-@main.route('/uploaded',methods=['GET','POST'])
+@main.route('/uploaded', methods=['GET', 'POST'])
 @login_required  #########要求登录
 @permission_required(Permission.SEARCH)
 def uploaded():
@@ -204,61 +200,61 @@ def uploaded():
     else:
         return render_template('uploaded.html')
 
+
 # 上传
-@main.route('/file_upload',methods=['GET','POST'])
+@main.route('/file_upload', methods=['GET', 'POST'])
 @login_required  #########要求登录
 @permission_required(Permission.SEARCH)
 def file_upload():
-    form=FileForm()
-    name=current_user.name
+    form = FileForm()
+    name = current_user.name
     if request.method == 'POST':
         if form.validate_on_submit():
             file1 = request.files['file1']
             file2 = request.files['file2']
             file3 = request.files['file3']
             file4 = request.files['file4']
-            filename1 = name+'-'+file1.filename
-            filename2 = name+'-'+file2.filename
-            filename3 = name+'-'+file3.filename
-            filename4 = name+'-'+file4.filename
+            filename1 = name + '-' + file1.filename
+            filename2 = name + '-' + file2.filename
+            filename3 = name + '-' + file3.filename
+            filename4 = name + '-' + file4.filename
             if file1 or file2 or file3 or file4:
                 file1.save(os.path.join('.\\upload\\first', filename1))
                 file2.save(os.path.join('.\\upload\\final', filename2))
                 file3.save(os.path.join('.\\upload\\result', filename3))
                 file4.save(os.path.join('.\\upload\\video', filename4))
                 flash('上传成功')
-                return render_template('file_upload.html',form=form)
+                return render_template('file_upload.html', form=form)
             else:
                 flash('请选择文件')
-                return render_template('file_upload.html',form=form)
+                return render_template('file_upload.html', form=form)
     else:
-        return render_template('file_upload.html',form=form)
+        return render_template('file_upload.html', form=form)
 
 
 ##
-@main.route('/info',methods=['GET'])
+@main.route('/info', methods=['GET'])
 @login_required  #########要求登录
 @permission_required(Permission.SEARCH)
 def info():
-    name=current_user.name
+    name = current_user.name
 
     return render_template('info.html')
 
 
-
-#创建标书信息
+# 创建标书信息
 @login_required
 @main.route('/bid_data', methods=['GET', 'POST'])
 @permission_required(Permission.EDIT)
 def bid_data():
     # 判断是否是管理员
     user = User.query.filter_by(username=current_user.username).first()
-    form =BID_dataForm(user)
+    form = BID_dataForm(user)
 
     if form.validate_on_submit():
 
         # id格式化
-        #id_format = '0x%04x' % int(form.id.data, base=16)
+        # id_format = '0x%04x' % int(form.id.data, base=16)
         device = Auction_data(
 
             IDnumber=form.IDnumber.data,
@@ -267,29 +263,30 @@ def bid_data():
             author=Auction_data.query.get(form.action_user.data)
         )
 
-        #判断标书是否存在
+        # 判断标书是否存在
         flag = True
         if Auction_data.query.filter_by(IDnumber=device.IDnumber).count() > 0:
             flash('该身份证已存在')
         else:
             db.session.add(device)
             flash(u"添加成功")
-        return render_template('BID_data.html',user=user, form=form)
+        return render_template('BID_data.html', user=user, form=form)
 
-    return render_template('BID_data.html',user=user, form=form)
+    return render_template('BID_data.html', user=user, form=form)
 
-#创建策略
+
+# 创建策略
 @login_required
 @main.route('/bid_action', methods=['GET', 'POST'])
 @permission_required(Permission.EDIT)
 def bid_action():
     # 判断是否是管理员
     user = User.query.filter_by(username=current_user.username).first()
-    form =BID_actionForm(user=user)
+    form = BID_actionForm(user=user)
 
     if form.validate_on_submit():
         # id格式化
-        #id_format = '0x%04x' % int(form.id.data, base=16)
+        # id_format = '0x%04x' % int(form.id.data, base=16)
         device = BID_action(
             diff=BID_action.query.get(form.diff.data),
             refer_time=BID_action.query.get(form.refer_time.data),
@@ -301,37 +298,36 @@ def bid_action():
         db.session.add(device)
 
         flash(u"添加成功")
-        return render_template('BID_action.html',user=user, form=form)
+        return render_template('BID_action.html', user=user, form=form)
 
-    return render_template('BID_action.html',user=user, form=form)
+    return render_template('BID_action.html', user=user, form=form)
 
 
-#查询功能创建
+# 查询功能创建
 @login_required
 @main.route('/Inquiry_data', methods=['GET', 'POST'])
 @permission_required(Permission.EDIT)
 def Inquiry_data():
-    form=InquiryForm()
-    name=current_user.name
+    form = InquiryForm()
+    name = current_user.name
     auction_data = db.session.query(Auction_data).all()
-    return render_template("Inquiry_data.html", form=form,action_data=auction_data)
+    return render_template("Inquiry_data.html", form=form, action_data=auction_data)
+
 
 @login_required
 @main.route('/Inquiry_action', methods=['GET', 'POST'])
 @permission_required(Permission.SEARCH)
 def Inquiry_action():
-    form=InquiryForm()
-    name=current_user.name
+    form = InquiryForm()
+    name = current_user.name
     action_data = db.session.query(BID_action).all()
-
 
     if request.method == 'POST':
         pass
         if form.validate_on_submit():
             pass
 
-
-    return render_template("Inquiry_action.html", form=form,action_data=action_data)
+    return render_template("Inquiry_action.html", form=form, action_data=action_data)
 
 
 ###修改标书信息
@@ -343,7 +339,7 @@ def Edit_BID_data(device_id):
     device = Auction_data.query.filter_by(id=device_id).first()
 
     # 判断是否是管理员
-    if  1:                     #current_user.can(Permission.PRODUCTION):
+    if 1:  # current_user.can(Permission.PRODUCTION):
         user = User.query.filter_by(username=current_user.username).first()
         form = Edit_BID_dataForm(user=user)
 
@@ -367,7 +363,7 @@ def Edit_BID_data(device_id):
         form.BIDnumber.data = device.BIDnumber
         form.BIDpassword.data = device.BIDpassword
         form.action_user.data = device.author
-        return render_template('edit_bid_data.html', form=form,user=user, device=device)
+        return render_template('edit_bid_data.html', form=form, user=user, device=device)
 
 
 @login_required
@@ -408,6 +404,99 @@ def Edit_action_data(device_id):
         form.ahead_price.data = device.ahead_price
         form.action_user.data = device.author_id
 
-        return render_template('edit_bid_action.html', form=form,user=user, device=device)
+        return render_template('edit_bid_action.html', form=form, user=user, device=device)
 
 
+# 操作EXCEL
+def open_excel(file='file.xls'):
+    try:
+        data = xlrd.open_workbook(file)
+        return data
+    except Exception as e:
+        print(str(e))
+
+
+        # 根据索引获取Excel表格中的数据   参数:file：Excel文件路径     colnameindex：表头列名所在行的所以  ，by_index：表的索引
+
+
+def excel_table_byindex(file='file.xls', colnameindex=0, by_index=0):
+    data = open_excel(file)
+    table = data.sheets()[by_index]
+    nrows = table.nrows  # 行数
+    ncols = table.ncols  # 列数
+    colnames = table.row_values(colnameindex)  # 某一行数据
+    list = []
+    for rownum in range(1, nrows):
+
+        row = table.row_values(rownum)
+        if row:
+            app = {}
+            for i in range(len(colnames)):
+                app[colnames[i]] = row[i]
+            list.append(app)
+    return list
+
+
+ALLOWED_EXTENSIONS = set(['xls', 'xlsx'])
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+@login_required
+@main.route('/Create_auction', methods=['GET', 'POST'])
+@permission_required(Permission.EDIT)
+def Create_auction():
+    if request.method == 'POST':
+        file = request.files['file']
+        filename = file.filename
+        #判断文件名是否合规
+        if file and allowed_file(file):
+            file.save(os.path.join('.\\upload',filename))
+        else:
+            flash('上传的格式不对')
+            return render_template('Create_aution.html')
+
+        #添加到数据库
+        tables = excel_table_byindex(file='.\\upload\\' + filename)
+        for row in tables:## 判断表格式是否对
+            if '手持机DEVICEID' not in row or \
+                        '手持机SIMID' not in row or \
+                        '手持机硬件版本' not in row or \
+                        '手持机软件版本' not in row or \
+                        '脚扣DEVICEID' not in row or \
+                        '脚扣SIMID' not in row or \
+                        '脚扣硬件版本' not in row or \
+                        '脚扣软件版本' not in row:
+                flash('失败:excel表格式不对')
+                return render_template('Create_aution.html')
+
+
+
+@login_required
+@main.route('/Create_action', methods=['GET', 'POST'])
+@permission_required(Permission.EDIT)
+def Create_action():
+    if request.method == 'POST':
+        file = request.files['file']
+        filename = file.filename
+        #判断文件名是否合规
+        if file and allowed_file(file):
+            file.save(os.path.join('.\\upload',filename))
+        else:
+            flash('上传的格式不对')
+            return render_template('Create_action.html')
+
+        #添加到数据库
+        tables = excel_table_byindex(file='.\\upload\\' + filename)
+        for row in tables:## 判断表格式是否对
+            if '手持机DEVICEID' not in row or \
+                        '手持机SIMID' not in row or \
+                        '手持机硬件版本' not in row or \
+                        '手持机软件版本' not in row or \
+                        '脚扣DEVICEID' not in row or \
+                        '脚扣SIMID' not in row or \
+                        '脚扣硬件版本' not in row or \
+                        '脚扣软件版本' not in row:
+                flash('失败:excel表格式不对')
+                return render_template('Create_action.html')
