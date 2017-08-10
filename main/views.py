@@ -437,7 +437,7 @@ def excel_table_byindex(file='file.xls', colnameindex=0, by_index=0):
     return list
 
 
-ALLOWED_EXTENSIONS = set(['xls', 'xlsx'])
+ALLOWED_EXTENSIONS = ['xls', 'xlsx']
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -470,7 +470,63 @@ def Create_auction():
                         '脚扣软件版本' not in row:
                 flash('失败:excel表格式不对')
                 return render_template('Create_aution.html')
+               # 判断手持机字段是否存在
+            if row['手持机DEVICEID'] != '' and row['手持机SIMID'] != '' and \
+                            row['手持机硬件版本'] != '' and row['手持机软件版本'] != '':
+                id_format = '0x%04x' % int(str(row['手持机DEVICEID']).split('.')[0], base=16)
+                device = Device(device_type='手持机',
+                                device_id=id_format,
+                                device_simid=str(row['手持机SIMID']).split('.')[0],
+                                hard_version=int(row['手持机硬件版本']),
+                                soft_version=int(row['手持机软件版本']),
+                                warehouse=False,
+                                shipment_time='无',
+                                agent='无',
+                                prison='无',
+                                shutdown=False)
+                # 判断是否id重复
+                flag = True
+                if Device.query.filter_by(device_id=device.device_id).count() > 0:
+                    flash('失败:设备ID:%s已存在' % device.device_id)
+                    flag = False
+                # 判断simid是否重复
+                elif Device.query.filter_by(device_simid=device.device_simid).count() > 0:
+                    flash('失败:设备SIMID:%s已存在' % device.device_simid)
+                    flag = False
+                if flag:
+                    db.session.add(device)
+                else:
+                    return render_template('import_device.html')
 
+            if row['脚扣DEVICEID'] != '' and row['脚扣SIMID'] != '' and \
+                            row['脚扣硬件版本'] != '' and row['脚扣软件版本'] != '':
+                id_format = '0x%04x' % int(str(row['脚扣DEVICEID']).split('.')[0], base=16)
+                device = Device(device_type='脚扣',
+                                device_id=id_format,
+                                device_simid=str(row['脚扣SIMID']).split('.')[0],
+                                hard_version=int(row['脚扣硬件版本']),
+                                soft_version=int(row['脚扣软件版本']),
+                                warehouse=False,
+                                shipment_time='无',
+                                agent='无',
+                                prison='无',
+                                shutdown=False)
+                # 判断是否id重复
+                flag = True
+                if Device.query.filter_by(device_id=device.device_id).count() > 0:
+                    flash('失败:设备ID:%s已存在' % device.device_id)
+                    flag = False
+                # 判断simid是否重复
+                elif Device.query.filter_by(device_simid=device.device_simid).count() > 0:
+                    flash('失败:设备SIMID:%s已存在' % device.device_simid)
+                    flag = False
+                if flag:
+                    db.session.add(device)
+                else:
+                    return render_template('import_device.html')
+            return redirect(url_for('.index'))
+
+        return render_template('import_device.html')
 
 
 @login_required

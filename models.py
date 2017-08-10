@@ -147,7 +147,7 @@ class User(UserMixin, db.Model):
 class Auction_data(db.Model):
     __tablename__ = 'bids'
     id = db.Column(db.Integer, primary_key=True)
-    IDnumber = db.Column(db.Integer)
+    IDnumber = db.Column(db.String)
     BIDnumber = db.Column(db.Integer)
     BIDpassword = db.Column(db.Integer)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))  # 对应backref
@@ -173,8 +173,8 @@ class BID_action(db.Model):
     __tablename__ = 'actions'
     id = db.Column(db.Integer, primary_key=True)
     diff = db.Column(db.Integer)  #参考时间差价
-    refer_time = db.Column(db.Integer) #参考时间
-    bid_time = db.Column(db.Integer) #出价截止时间
+    refer_time = db.Column(db.Float) #参考时间
+    bid_time = db.Column(db.Float) #出价截止时间
     delay_time = db.Column(db.Float) #出价延迟时间，0.1~0.9
     ahead_price = db.Column(db.Integer) #出价提前价格
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -193,7 +193,7 @@ class login_user(db.Model):
     login=db.Column(db.Integer)   #登录状态
     CODE=db.Column(db.String)    #使用的标书号
     codepsd=db.Column(db.String) #标书登录密码
-    ID_number=db.Column(db.Integer)
+    ID_number=db.Column(db.String)
     IP=db.Column  #记录登录IP
     MAC=db.Column(db.String)     #记录登录MAC地址
     COUNT=db.Column(db.Integer)  #登录状态
