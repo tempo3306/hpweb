@@ -279,24 +279,25 @@ def bid_data():
 @main.route('/bid_action', methods=['GET', 'POST'])
 @permission_required(Permission.EDIT)
 def bid_action():
-    # 判断是否是管理员
     user = User.query.filter_by(username=current_user.username).first()
     form = BID_actionForm(user=user)
 
     if form.validate_on_submit():
         # id格式化
         # id_format = '0x%04x' % int(form.id.data, base=16)
+        # print(Action.query.get(form.date.data))
         device = Action(
-            diff=Action.query.get(form.diff.data),
-            refer_time=Action.query.get(form.refer_time.data),
-            bid_time=Action.query.get(form.bid_time.data),
-            delay_time=Action.query.get(form.delay_time.data),
-            ahead_price=Action.query.get(form.ahead_price.data),
-            auction=Action.query.get(form.auction.data),
-            date=Action.query.get(form.date.date),
-            author=Action.query.get(form.action_user.data)
+            diff=form.diff.data,
+            refer_time=form.refer_time.data,
+            bid_time=form.bid_time.data,
+            delay_time=form.delay_time.data,
+            ahead_price=form.ahead_price.data,
+            date=form.date.data,
+            auction=Auction.query.get(form.auction_use.data),
+            author=User.query.get(form.action_user.data)
         )
         db.session.add(device)
+        # auction=Action.query.get(form.auction_use.data),  用ID查找 query.get_or_404
 
         flash(u"添加成功")
         return render_template('BID_action.html', user=user, form=form)
@@ -317,7 +318,7 @@ def Inquiry_data():
 
 @login_required
 @main.route('/Inquiry_action', methods=['GET', 'POST'])
-@permission_required(Permission.SEARCH)
+@permission_required(Permission.EDIT)
 def Inquiry_action():
     form = InquiryForm()
     name = current_user.name
@@ -335,7 +336,7 @@ def Inquiry_action():
 
 @login_required
 @main.route('/Edit_BID_data/<device_id>', methods=['GET', 'POST'])
-@permission_required(Permission.SEARCH)
+@permission_required(Permission.EDIT)
 def Edit_BID_data(device_id):
     device = Auction.query.filter_by(id=device_id).first()
 
@@ -354,7 +355,6 @@ def Edit_BID_data(device_id):
                 device.IDnumber = form.IDnumber.data
                 device.BIDnumber = form.BIDnumber.data
                 device.BIDpassword = form.BIDpassword.data
-                device.author = Auction.query.get(form.action_user.data)
                 db.session.add(device)
                 flash(u"修改成功")
                 return render_template('edit_bid_data.html', form=form, user=user, device=device)
@@ -363,7 +363,6 @@ def Edit_BID_data(device_id):
         form.IDnumber.data = device.IDnumber
         form.BIDnumber.data = device.BIDnumber
         form.BIDpassword.data = device.BIDpassword
-        form.action_user.data = device.author
         return render_template('edit_bid_data.html', form=form, user=user, device=device)
 
 
@@ -371,7 +370,7 @@ def Edit_BID_data(device_id):
 @main.route('/Edit_action_data/<device_id>', methods=['GET', 'POST'])
 @permission_required(Permission.EDIT)
 def Edit_action_data(device_id):
-    device = BID_action.query.filter_by(id=device_id).first()
+    device =Action.query.filter_by(id=device_id).first()
 
     # 判断是否是管理员
     if 1:
@@ -384,13 +383,15 @@ def Edit_action_data(device_id):
             if temp.count('delete') > 0:
                 db.session.delete(device)
             else:
-                device = BID_action(
-                    diff=BID_action.query.get(form.diff.data),
-                    refer_time=BID_action.query.get(form.refer_time.data),
-                    bid_time=BID_action.query.get(form.bid_time.data),
-                    delay_time=BID_action.query.get(form.delay_time.data),
-                    ahead_price=BID_action.query.get(form.ahead_price.data),
-                    author=BID_action.query.get(form.action_user.data)
+                device = Action(
+                    diff=form.diff.data,
+                    refer_time=form.refer_time.data,
+                    bid_time=form.bid_time.data,
+                    delay_time=form.delay_time.data,
+                    ahead_price=form.ahead_price.data,
+                    date=form.date.data,
+                    auction=Auction.query.get(form.auction_use.data),
+                    author=User.query.get(form.action_user.data)
                 )
                 db.session.add(device)
                 db.session.commit()
