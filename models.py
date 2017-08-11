@@ -69,8 +69,8 @@ class User(UserMixin, db.Model):
 
 
 # 对应策略
-    bids = db.relationship('Auction_data', backref='author', lazy='dynamic') #一对一  ,lazy='immediate',uselist=False
-    actions = db.relationship('BID_action', backref='author', lazy='dynamic')   #一对一,uselist=False
+#     bids = db.relationship('Auction_data', backref='author', lazy='dynamic') #一对一  ,lazy='immediate',uselist=False
+    actions = db.relationship('Action', backref='author', lazy='dynamic')   #一对多,uselist=False
 
     @property            #这可以让你将一个类方法转变成一个类属性,表示只读。
     def password(self):
@@ -144,15 +144,15 @@ class User(UserMixin, db.Model):
         return '<User %r>' % self.username
 
     #####拍牌数据库
-class Auction_data(db.Model):
-    __tablename__ = 'bids'
+class Auction(db.Model):
+    __tablename__ = 'auctions'
     id = db.Column(db.Integer, primary_key=True)
+    description=db.Column(db.String)
     IDnumber = db.Column(db.String)
     BIDnumber = db.Column(db.Integer)
     BIDpassword = db.Column(db.Integer)
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))  # 对应backref
-    # action_id =db.Column(db.Integer, db.ForeignKey('actions.id'))
-
+    # author_id = db.Column(db.Integer, db.ForeignKey('users.id'))  # 对应backref
+    actions = db.relationship('Action', backref='auction', lazy='dynamic')
 
     def __repr__(self):
         return '<Auction %r>' % self.IDnumber
@@ -169,7 +169,7 @@ class Auction_data(db.Model):
         }
         return json_post
 
-class BID_action(db.Model):
+class Action(db.Model):
     __tablename__ = 'actions'
     id = db.Column(db.Integer, primary_key=True)
     diff = db.Column(db.Integer)  #参考时间差价
@@ -178,9 +178,9 @@ class BID_action(db.Model):
     delay_time = db.Column(db.Float) #出价延迟时间，0.1~0.9
     ahead_price = db.Column(db.Integer) #出价提前价格
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    # auctions = db.relationship('Auction_data', backref='action', lazy='immediate') #一对一
-
+    date = db.Column(db.String)  #17年8月
+    auction_id =db.Column(db.Integer, db.ForeignKey('auctions.id'))
+    action_result=db.Column(db.String(128))   #结果记录
     def __repr__(self):
         return '<BID %r>' % self.diff
 

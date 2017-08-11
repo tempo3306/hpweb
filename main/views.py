@@ -8,7 +8,7 @@ from .forms import EditProfileForm, EditProfileAdminForm, \
     Edit_BID_dataForm, Edit_BID_actionForm
 
 from .. import db
-from ..models import User, Role, Permission, Auction_data, BID_action
+from ..models import User, Role, Permission, Auction,Action
 from ..info_models import Article
 from ..decorators import admin_required, permission_required
 import os
@@ -249,23 +249,22 @@ def info():
 def bid_data():
     # 判断是否是管理员
     user = User.query.filter_by(username=current_user.username).first()
-    form = BID_dataForm(user)
+    form = BID_dataForm()
 
     if form.validate_on_submit():
 
         # id格式化
         # id_format = '0x%04x' % int(form.id.data, base=16)
-        device = Auction_data(
-
+        device = Auction(
+            description=form.description.data,
             IDnumber=form.IDnumber.data,
             BIDnumber=form.BIDnumber.data,
-            BIDpassword=form.BIDpassword.data,
-            author=Auction_data.query.get(form.action_user.data)
+            BIDpassword=form.BIDpassword.data
         )
 
         # 判断标书是否存在
         flag = True
-        if Auction_data.query.filter_by(IDnumber=device.IDnumber).count() > 0:
+        if Auction.query.filter_by(IDnumber=device.IDnumber).count() > 0:
             flash('该身份证已存在')
         else:
             db.session.add(device)
@@ -287,13 +286,15 @@ def bid_action():
     if form.validate_on_submit():
         # id格式化
         # id_format = '0x%04x' % int(form.id.data, base=16)
-        device = BID_action(
-            diff=BID_action.query.get(form.diff.data),
-            refer_time=BID_action.query.get(form.refer_time.data),
-            bid_time=BID_action.query.get(form.bid_time.data),
-            delay_time=BID_action.query.get(form.delay_time.data),
-            ahead_price=BID_action.query.get(form.ahead_price.data),
-            author=BID_action.query.get(form.action_user.data)
+        device = Action(
+            diff=Action.query.get(form.diff.data),
+            refer_time=Action.query.get(form.refer_time.data),
+            bid_time=Action.query.get(form.bid_time.data),
+            delay_time=Action.query.get(form.delay_time.data),
+            ahead_price=Action.query.get(form.ahead_price.data),
+            auction=Action.query.get(form.auction.data),
+            date=Action.query.get(form.date.date),
+            author=Action.query.get(form.action_user.data)
         )
         db.session.add(device)
 
@@ -310,7 +311,7 @@ def bid_action():
 def Inquiry_data():
     form = InquiryForm()
     name = current_user.name
-    auction_data = db.session.query(Auction_data).all()
+    auction_data = db.session.query(Auction).all()
     return render_template("Inquiry_data.html", form=form, action_data=auction_data)
 
 
@@ -320,7 +321,7 @@ def Inquiry_data():
 def Inquiry_action():
     form = InquiryForm()
     name = current_user.name
-    action_data = db.session.query(BID_action).all()
+    action_data = db.session.query(Action).all()
 
     if request.method == 'POST':
         pass
@@ -336,7 +337,7 @@ def Inquiry_action():
 @main.route('/Edit_BID_data/<device_id>', methods=['GET', 'POST'])
 @permission_required(Permission.SEARCH)
 def Edit_BID_data(device_id):
-    device = Auction_data.query.filter_by(id=device_id).first()
+    device = Auction.query.filter_by(id=device_id).first()
 
     # 判断是否是管理员
     if 1:  # current_user.can(Permission.PRODUCTION):
@@ -353,7 +354,7 @@ def Edit_BID_data(device_id):
                 device.IDnumber = form.IDnumber.data
                 device.BIDnumber = form.BIDnumber.data
                 device.BIDpassword = form.BIDpassword.data
-                device.author = Auction_data.query.get(form.action_user.data)
+                device.author = Auction.query.get(form.action_user.data)
                 db.session.add(device)
                 flash(u"修改成功")
                 return render_template('edit_bid_data.html', form=form, user=user, device=device)

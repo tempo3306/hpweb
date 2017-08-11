@@ -8,7 +8,7 @@ from .forms import EditProfileForm, EditProfileAdminForm, \
     Edit_BID_dataForm, Edit_BID_actionForm
 from .info_forms import PostForm
 from .. import db
-from ..models import User, Role, Permission,  Auction_data, BID_action
+from ..models import User, Role, Permission,  Auction, Action
 from ..info_models import Article
 from ..decorators import admin_required, permission_required
 import os
