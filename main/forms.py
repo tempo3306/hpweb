@@ -23,9 +23,9 @@ class BID_dataForm(Form):
 
 class BID_actionForm(Form):
     diff_choices=[(i*100+400,i*100+400) for i in range(12)]
-    refer_time_choices=[(i+40,i+40) for i in range(16)]
-    bid_time_choices=[(i+54,i+54) for i in range(2)]
-    delay_time_choices=[(i*0.1,i*0.1) for i in range(10)]
+    refer_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
+    bid_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
+    delay_time_choices=[(i*0.1,"0.%d"%i) for i in range(10)]
     ahead_price_choices=[(i*100,i*100) for i in range(4)]
     date_month=[("17年%d月"%i,"17年%d月"%i)  for i in range(8,13)]
     date_month2=[("18年%d月"%i,"18年%d月"%i) for i in range(1,13)]
