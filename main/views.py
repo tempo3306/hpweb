@@ -207,13 +207,14 @@ def uploaded():
 @permission_required(Permission.SEARCH)
 def file_upload():
     form = FileForm()
-    name = current_user.name
+    name = current_user.username
     if request.method == 'POST':
         if form.validate_on_submit():
             file1 = request.files['file1']
             file2 = request.files['file2']
             file3 = request.files['file3']
             file4 = request.files['file4']
+            print(file1.filename,name)
             filename1 = name + '-' + file1.filename
             filename2 = name + '-' + file2.filename
             filename3 = name + '-' + file3.filename
@@ -237,7 +238,7 @@ def file_upload():
 @login_required  #########要求登录
 @permission_required(Permission.SEARCH)
 def info():
-    name = current_user.name
+    name = current_user.username
 
     return render_template('info.html')
 
@@ -311,7 +312,7 @@ def bid_action():
 @permission_required(Permission.EDIT)
 def Inquiry_data():
     form = InquiryForm()
-    name = current_user.name
+    name = current_user.username
     auction_data = db.session.query(Auction).all()
     return render_template("Inquiry_data.html", form=form, action_data=auction_data)
 
@@ -352,14 +353,24 @@ def Edit_BID_data(device_id):
             if temp.count('delete') > 0:
                 db.session.delete(device)
             else:
-                device.IDnumber = form.IDnumber.data
-                device.BIDnumber = form.BIDnumber.data
-                device.BIDpassword = form.BIDpassword.data
-                db.session.add(device)
-                flash(u"修改成功")
+                device = Auction(
+                    description=form.description.data,
+                    IDnumber=form.IDnumber.data,
+                    BIDnumber=form.BIDnumber.data,
+                    BIDpassword=form.BIDpassword.data
+                )
+
+                # 判断标书是否存在
+                flag = True
+                if Auction.query.filter_by(IDnumber=device.IDnumber).count() > 0:
+                    flash('该身份证已存在')
+                else:
+                    db.session.add(device)
+                    flash(u"修改成功")
                 return render_template('edit_bid_data.html', form=form, user=user, device=device)
 
         # 默认显示
+        form.description.data=device.description
         form.IDnumber.data = device.IDnumber
         form.BIDnumber.data = device.BIDnumber
         form.BIDpassword.data = device.BIDpassword
@@ -417,10 +428,7 @@ def open_excel(file='file.xls'):
     except Exception as e:
         print(str(e))
 
-
-        # 根据索引获取Excel表格中的数据   参数:file：Excel文件路径     colnameindex：表头列名所在行的所以  ，by_index：表的索引
-
-
+ # 根据索引获取Excel表格中的数据   参数:file：Excel文件路径     colnameindex：表头列名所在行的所以  ，by_index：表的索引
 def excel_table_byindex(file='file.xls', colnameindex=0, by_index=0):
     data = open_excel(file)
     table = data.sheets()[by_index]
@@ -436,100 +444,60 @@ def excel_table_byindex(file='file.xls', colnameindex=0, by_index=0):
             for i in range(len(colnames)):
                 app[colnames[i]] = row[i]
             list.append(app)
-    return list
+    return list   #返回元素为字典的列表
 
 
-ALLOWED_EXTENSIONS = ['xls', 'xlsx']
+allowed_extensions = ['xls', 'xlsx']
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+           filename.rsplit('.', 1)[1] in allowed_extensions
 
 
 @login_required
-@main.route('/Create_auction', methods=['GET', 'POST'])
+@main.route('/Create_auction', methods=['GET','POST'])
 @permission_required(Permission.EDIT)
 def Create_auction():
     if request.method == 'POST':
         file = request.files['file']
         filename = file.filename
+        print(filename)
         #判断文件名是否合规
-        if file and allowed_file(file):
+        if file and allowed_file(filename):
             file.save(os.path.join('.\\upload',filename))
         else:
             flash('上传的格式不对')
-            return render_template('Create_aution.html')
+            return render_template('Create_auction.html')
 
-        #添加到数据库
+         #添加到数据库
         tables = excel_table_byindex(file='.\\upload\\' + filename)
         for row in tables:## 判断表格式是否对
-            if '手持机DEVICEID' not in row or \
-                        '手持机SIMID' not in row or \
-                        '手持机硬件版本' not in row or \
-                        '手持机软件版本' not in row or \
-                        '脚扣DEVICEID' not in row or \
-                        '脚扣SIMID' not in row or \
-                        '脚扣硬件版本' not in row or \
-                        '脚扣软件版本' not in row:
+            if '标书说明' not in row or \
+                            '身份证号' not in row or \
+                            '标书号' not in row or \
+                            '标书密码' not in row:
                 flash('失败:excel表格式不对')
-                return render_template('Create_aution.html')
-               # 判断手持机字段是否存在
-            if row['手持机DEVICEID'] != '' and row['手持机SIMID'] != '' and \
-                            row['手持机硬件版本'] != '' and row['手持机软件版本'] != '':
-                id_format = '0x%04x' % int(str(row['手持机DEVICEID']).split('.')[0], base=16)
-                device = Device(device_type='手持机',
-                                device_id=id_format,
-                                device_simid=str(row['手持机SIMID']).split('.')[0],
-                                hard_version=int(row['手持机硬件版本']),
-                                soft_version=int(row['手持机软件版本']),
-                                warehouse=False,
-                                shipment_time='无',
-                                agent='无',
-                                prison='无',
-                                shutdown=False)
-                # 判断是否id重复
-                flag = True
-                if Device.query.filter_by(device_id=device.device_id).count() > 0:
-                    flash('失败:设备ID:%s已存在' % device.device_id)
-                    flag = False
-                # 判断simid是否重复
-                elif Device.query.filter_by(device_simid=device.device_simid).count() > 0:
-                    flash('失败:设备SIMID:%s已存在' % device.device_simid)
-                    flag = False
-                if flag:
-                    db.session.add(device)
-                else:
-                    return render_template('import_device.html')
-
-            if row['脚扣DEVICEID'] != '' and row['脚扣SIMID'] != '' and \
-                            row['脚扣硬件版本'] != '' and row['脚扣软件版本'] != '':
-                id_format = '0x%04x' % int(str(row['脚扣DEVICEID']).split('.')[0], base=16)
-                device = Device(device_type='脚扣',
-                                device_id=id_format,
-                                device_simid=str(row['脚扣SIMID']).split('.')[0],
-                                hard_version=int(row['脚扣硬件版本']),
-                                soft_version=int(row['脚扣软件版本']),
-                                warehouse=False,
-                                shipment_time='无',
-                                agent='无',
-                                prison='无',
-                                shutdown=False)
-                # 判断是否id重复
-                flag = True
-                if Device.query.filter_by(device_id=device.device_id).count() > 0:
-                    flash('失败:设备ID:%s已存在' % device.device_id)
-                    flag = False
-                # 判断simid是否重复
-                elif Device.query.filter_by(device_simid=device.device_simid).count() > 0:
-                    flash('失败:设备SIMID:%s已存在' % device.device_simid)
-                    flag = False
-                if flag:
-                    db.session.add(device)
-                else:
-                    return render_template('import_device.html')
-            return redirect(url_for('.index'))
-
-        return render_template('import_device.html')
-
+                return render_template('Create_auction.html')
+            try:
+                device = Action(
+                    description=row['标书说明'],
+                    IDnumber=row['身份证号'],
+                    BIDnumber=row['标书号'],
+                    BIDpassword=row['标书密码']
+                )
+            except:
+                flash('失败:excel表格式不对')
+                return render_template('Create_auction.html')
+            try:
+                db.session.add(device)
+                db.session.commit()
+            except:
+                db.session.rollback()
+                flash('失败:excel表格式不对')
+                return render_template('Create_auction.html')
+        flash("添加策略成功")
+        return render_template('Create_auction.html')
+    else:
+        return render_template('Create_auction.html')
 
 @login_required
 @main.route('/Create_action', methods=['GET', 'POST'])
@@ -539,22 +507,50 @@ def Create_action():
         file = request.files['file']
         filename = file.filename
         #判断文件名是否合规
-        if file and allowed_file(file):
+        if file and allowed_file(filename):
             file.save(os.path.join('.\\upload',filename))
         else:
             flash('上传的格式不对')
             return render_template('Create_action.html')
-
         #添加到数据库
         tables = excel_table_byindex(file='.\\upload\\' + filename)
         for row in tables:## 判断表格式是否对
-            if '手持机DEVICEID' not in row or \
-                        '手持机SIMID' not in row or \
-                        '手持机硬件版本' not in row or \
-                        '手持机软件版本' not in row or \
-                        '脚扣DEVICEID' not in row or \
-                        '脚扣SIMID' not in row or \
-                        '脚扣硬件版本' not in row or \
-                        '脚扣软件版本' not in row:
+            if '加价时间' not in row or \
+                        '加价幅度' not in row or \
+                        '截止时间' not in row or \
+                        '延迟时间' not in row or \
+                        '提前价格' not in row or \
+                        '日期' not in row or \
+                        '标书' not in row or \
+                        '拍手' not in row:
                 flash('失败:excel表格式不对')
                 return render_template('Create_action.html')
+        ##### 判断手持机字段是否存在
+            try:
+                device = Action(
+                    refer_time=row['加价时间'],
+                    diff=row['加价幅度'],
+                    bid_time=row['截止时间'],
+                    delay_time=row['延迟时间'],
+                    ahead_price=row['提前价格'],
+                    date=row['日期'],
+                    auction=Auction.query.filter_by(row['标书']).first(),
+                    author=User.query.filter_by(row['拍手']).first()
+                )
+
+            except:
+                flash('失败:excel表数据格式不对')
+                return render_template('Create_action.html')
+            try:
+                db.session.add(device)
+                db.session.commit()
+            except:
+                db.session.rollback()
+                flash('失败:excel表数据格式不对')
+                return render_template('Create_action.html')
+        flash("添加策略成功")
+        return render_template('Create_action.html')
+    else:
+        return render_template('Create_action.html')
+
+

@@ -16,15 +16,24 @@
       <th>差价</th>
       <th>参考时间</th>
       <th>出价时间</th>
-      <th>操作</th>
+      <th>延迟时间</th>
+      <th>提前价格</th>
+      <th>拍手</th>
+      <th>日期</th>
+      <th>标书</th>
     </tr>
   </thead>
   <tbody>
       {% for data in action_data %}
     <tr>
       <td> {{data.diff}} </td>
-      <td> {{data.refer_time}} </td>
+      <td> {{data.refre_time}} </td>
       <td> {{data.bid_time}} </td>
+      <td> {{data.delay_time}} </td>
+      <td> {{data.ahead_price}} </td>
+      <td> {{data.author}} </td>
+      <td> {{data.date}} </td>
+      <td> {{data.auction}} </td>
       <td>  <a href={{ url_for('main.Edit_action_data',device_id=data.id) }}> {{data.id}} </a>  </td>
     </tr>
      {% endfor %}

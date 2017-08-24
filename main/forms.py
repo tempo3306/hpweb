@@ -31,8 +31,8 @@ class BID_actionForm(Form):
     date_month2=[("18年%d月"%i,"18年%d月"%i) for i in range(1,13)]
     date_month.extend(date_month2)
 
-    diff = SelectField(u"相差价格",coerce=int, choices=diff_choices) #参考时间差价
     refer_time = SelectField(u"加价时间",coerce=float,choices=refer_time_choices,default=(50,50)) #参考时间
+    diff = SelectField(u"相差价格",coerce=int, choices=diff_choices) #参考时间差价
     bid_time = SelectField(u"强制出价时间",coerce=float,choices=bid_time_choices,default=(55,55)) #出价截止时间
     delay_time = SelectField(u"出价延迟",coerce=float, choices=delay_time_choices) #出价延迟时间，0.1~0.9
     ahead_price = SelectField(u"出价提前",coerce=int,choices=ahead_price_choices,default=(100,100)) #出价提前价格
@@ -67,35 +67,39 @@ class Edit_BID_dataForm(Form):
 
 class Edit_BID_actionForm(Form):
     diff_choices=[(i*100+400,i*100+400) for i in range(12)]
-    refer_time_choices=[(i+40,i+40) for i in range(16)]
-    bid_time_choices=[(i+54,i+54) for i in range(2)]
-    delay_time_choices=[(i*0.1,i*0.1) for i in range(10)]
+    refer_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
+    bid_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
+    delay_time_choices=[(i*0.1,"0.%d"%i) for i in range(10)]
     ahead_price_choices=[(i*100,i*100) for i in range(4)]
     date_month=[("17年%d月"%i,"17年%d月"%i)  for i in range(8,13)]
     date_month2=[("18年%d月"%i,"18年%d月"%i) for i in range(1,13)]
     date_month.extend(date_month2)
 
+    refer_time = SelectField(u"加价时间",coerce=float,choices=refer_time_choices,default=(50,50)) #参考时间
     diff = SelectField(u"相差价格",coerce=int, choices=diff_choices) #参考时间差价
-    refer_time = SelectField(u"加价时间",coerce=float,choices=refer_time_choices) #参考时间
-    bid_time = SelectField(u"强制出价时间",coerce=float,choices=bid_time_choices) #出价截止时间
+    bid_time = SelectField(u"强制出价时间",coerce=float,choices=bid_time_choices,default=(55,55)) #出价截止时间
     delay_time = SelectField(u"出价延迟",coerce=float, choices=delay_time_choices) #出价延迟时间，0.1~0.9
-    ahead_price = SelectField(u"出价提前",coerce=int,choices=ahead_price_choices) #出价提前价格
+    ahead_price = SelectField(u"出价提前",coerce=int,choices=ahead_price_choices,default=(100,100)) #出价提前价格
     date= SelectField(u"拍牌月份",coerce=str,choices=date_month,default=date_month[0])
-    auction=SelectField("标书选择",coerce=int)
+    auction_use=SelectField("标书选择",coerce=int)
     action_user = SelectField('拍手选择：', coerce=int)
+    # 提交按钮
+    submit = SubmitField(u'提交修改')
+    delete = SubmitField(u'删除策略')
+
 # 提交按钮
     submit = SubmitField(u'提交修改')
     delete = SubmitField(u'删除策略')
 
     def __init__(self, user, *args, **kwargs):
-        super(BID_actionForm, self).__init__(*args, **kwargs)
+        super(Edit_BID_actionForm, self).__init__(*args, **kwargs)
         self.action_user.choices = [(user.id, user.username)
-                             for user in User.query.order_by(User.username).all()]
-        self.auction.choices=[(auction.id,auction.description)
-                    for auction in Auction.query.order_by(Auction.description).all()]
+                                    for user in User.query.order_by(User.username).all()]
+        self.auction_use.choices=[(auction.id,auction.description)
+                                  for auction in Auction.query.order_by(Auction.description).all()]
+
 
         self.user = user
-
 
 ###文件上传
 class FileForm(Form):
