@@ -478,11 +478,11 @@ def Create_auction():
                 flash('失败:excel表格式不对')
                 return render_template('Create_auction.html')
             try:
-                device = Action(
+                device = Auction(
                     description=row['标书说明'],
                     IDnumber=row['身份证号'],
-                    BIDnumber=row['标书号'],
-                    BIDpassword=row['标书密码']
+                    BIDnumber=int(row['标书号']),
+                    BIDpassword=int(row['标书密码'])
                 )
             except:
                 flash('失败:excel表格式不对')
@@ -528,14 +528,14 @@ def Create_action():
         ##### 判断手持机字段是否存在
             try:
                 device = Action(
-                    refer_time=row['加价时间'],
-                    diff=row['加价幅度'],
-                    bid_time=row['截止时间'],
-                    delay_time=row['延迟时间'],
-                    ahead_price=row['提前价格'],
+                    refer_time=float(row['加价时间']),
+                    diff=int(row['加价幅度']),
+                    bid_time=float(row['截止时间']),
+                    delay_time=float(row['延迟时间']),
+                    ahead_price=int(row['提前价格']),
                     date=row['日期'],
-                    auction=Auction.query.filter_by(row['标书']).first(),
-                    author=User.query.filter_by(row['拍手']).first()
+                    auction=Auction.query.filter_by(description=row['标书']).first(),
+                    author=User.query.filter_by(username=row['拍手']).first()
                 )
 
             except:
