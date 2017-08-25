@@ -471,7 +471,8 @@ def Create_auction():
             return render_template('Create_auction.html')
 
          #添加到数据库
-        tables = excel_table_byindex(file=os.environ.get('upload')+ filename)
+        print(os.path.join(os.environ.get('upload'),filename))
+        tables = excel_table_byindex(file=os.path.join(os.environ.get('upload'),filename))
         for row in tables:## 判断表格式是否对
             if '标书说明' not in row or \
                             '身份证号' not in row or \
@@ -515,7 +516,7 @@ def Create_action():
             flash('上传的格式不对')
             return render_template('Create_action.html')
         #添加到数据库
-        tables = excel_table_byindex(file=os.environ.get('upload') + filename)
+        tables = excel_table_byindex(file=os.path.join(os.environ.get('upload'),filename))
         for row in tables:## 判断表格式是否对
             if '加价时间' not in row or \
                         '加价幅度' not in row or \
