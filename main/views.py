@@ -325,6 +325,7 @@ def Inquiry_action():
     name = current_user.name
     action_data = db.session.query(Action).all()
 
+
     if request.method == 'POST':
         pass
         if form.validate_on_submit():
