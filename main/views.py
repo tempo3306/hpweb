@@ -192,7 +192,7 @@ def uploaded():
         file = request.files['file']
         filename = file.filename
         if file:
-            file.save(os.path.join('.\\upload', filename))
+            file.save(os.path.join(os.environ.get('upload'), filename))
             return render_template('uploaded.html')
         else:
             flash('失败：上传文件格式不对')
@@ -208,6 +208,7 @@ def uploaded():
 def file_upload():
     form = FileForm()
     name = current_user.username
+    print(os.environ.get('upload'))
     if request.method == 'POST':
         if form.validate_on_submit():
             file1 = request.files['file1']
