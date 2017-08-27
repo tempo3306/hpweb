@@ -239,9 +239,11 @@ def file_upload():
 @login_required  #########要求登录
 @permission_required(Permission.SEARCH)
 def info():
-    name = current_user.username
-
-    return render_template('info.html')
+    username = current_user.username
+    user=User.query.filter_by(username=username).first()
+    if user.username:
+        actions=Action.query.filter_by(author=user).all()
+    return render_template('info.html',actions=actions)
 
 
 # 创建标书信息

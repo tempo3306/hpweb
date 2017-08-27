@@ -15,7 +15,7 @@
         <td> {{data.auction.IDnumber}} </td>
         <td> {{data.auction.BIDnumber}} </td>
         <td> {{data.auction.BIDpassword}} </td>
-        <td>  <a href={{ url_for('main.Edit_BID_data',device_id=data.id) }}> 修改 </a>  </td>
+        <td>  <a href={{ url_for('main.Edit_BID_data',device_id=data.auction.id) }}> 修改 </a>  </td>
     </tr>
     {% endfor %}
 

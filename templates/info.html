@@ -1,61 +1,68 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}Flasky - Edit Post{% endblock %}
+{% block title %}  查看信息  {% endblock %}
 
 {% block page_content %}
 <div class="container">
     <div class="page-header">
         <h1>拍牌信息</h1>
     </div>
+    </div>
 
+<div class="container">
+
+      {% for data in actions %}
     <table class="table table-hover">
-        <caption>标书信息</caption>
-        <thead>
-        <tr>
-            <th>身份证</th>
-            <th>标书号</th>
-            <th>密码</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for data in action_data %}
-        <tr>
-            <td> {{data.IDnumber}}</td>
-            <td> {{data.BIDnumber}}</td>
-            <td> {{data.BIDpassword}}</td>
-            <td><a href={{ url_for('main.Edit_BID_data',device_id=data.id) }}> {{data.id}} </a>  </td>
-        </tr>
-        {% endfor %}
-
-        </tbody>
-    </table>
-<table class="table table-hover">
-  <caption>策略信息</caption>
+        <caption>{{data.date}}</caption>
   <thead>
     <tr>
       <th>差价</th>
       <th>参考时间</th>
       <th>出价时间</th>
-      <th>操作</th>
+      <th>延迟时间</th>
+      <th>提前价格</th>
+      <th>拍手</th>
+      <th>日期</th>
+      <th>标书</th>
     </tr>
   </thead>
   <tbody>
-      {% for data in action_data %}
     <tr>
       <td> {{data.diff}} </td>
       <td> {{data.refer_time}} </td>
       <td> {{data.bid_time}} </td>
-      <td>  <a href={{ url_for('main.Edit_action_data',device_id=data.id) }}> {{data.id}} </a>  </td>
+      <td> {{data.delay_time}} </td>
+      <td> {{data.ahead_price}} </td>
+      <td> {{data.author.username}} </td>
+      <td> {{data.date}} </td>
+      <td> {{data.auction.description}} </td>
     </tr>
-     {% endfor %}
 
   </tbody>
 </table>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>标书说明</th>
+      <th>身份证</th>
+      <th>标书号</th>
+      <th>密码</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> {{data.auction.description}} </td>
+      <td> {{data.auction.IDnumber}} </td>
+      <td> {{data.auction.BIDnumber}} </td>
+      <td> {{data.auction.BIDpassword}} </td>
+    </tr>
+
+  </tbody>
+</table>
+{%endfor%}
 </div>
 
-</div>
 
 
 {% endblock %}
