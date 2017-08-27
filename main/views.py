@@ -8,7 +8,7 @@ from .forms import EditProfileForm, EditProfileAdminForm, \
     Edit_BID_dataForm, Edit_BID_actionForm
 
 from .. import db
-from ..models import User, Role, Permission, Auction,Action
+from ..models import User, Role, Permission, Auction, Action
 from ..info_models import Article
 from ..decorators import admin_required, permission_required
 import os
@@ -47,16 +47,16 @@ def index():
     #                        show_followed=show_followed, show_new=show_new, pagination=pagination)
 
 
-@main.route('/user/<username>')
-def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    page = request.args.get('page', 1, type=int)
-    pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
-        page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
-        error_out=False)
-    posts = pagination.items
-    return render_template('user.html', user=user, posts=posts,
-                           pagination=pagination)
+# @main.route('/user/<username>')
+# def user(username):
+#     user = User.query.filter_by(username=username).first_or_404()
+#     page = request.args.get('page', 1, type=int)
+#     pagination = user.posts.order_by(Post.timestamp.desc()).paginate(
+#         page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
+#         error_out=False)
+#     posts = pagination.items
+#     return render_template('user.html', user=user, posts=posts,
+#                            pagination=pagination)
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -215,7 +215,7 @@ def file_upload():
             file2 = request.files['file2']
             file3 = request.files['file3']
             file4 = request.files['file4']
-            print(file1.filename,name)
+            print(file1.filename, name)
             filename1 = name + '-' + file1.filename
             filename2 = name + '-' + file2.filename
             filename3 = name + '-' + file3.filename
@@ -307,34 +307,6 @@ def bid_action():
     return render_template('BID_action.html', user=user, form=form)
 
 
-# 查询功能创建
-@login_required
-@main.route('/Inquiry_data', methods=['GET', 'POST'])
-@permission_required(Permission.EDIT)
-def Inquiry_data():
-    form = InquiryForm()
-    name = current_user.username
-    auction_data = db.session.query(Auction).all()
-    return render_template("Inquiry_data.html", form=form, action_data=auction_data)
-
-
-@login_required
-@main.route('/Inquiry_action', methods=['GET', 'POST'])
-@permission_required(Permission.EDIT)
-def Inquiry_action():
-    form = InquiryForm()
-    name = current_user.name
-    action_data = db.session.query(Action).all()
-
-
-    if request.method == 'POST':
-        pass
-        if form.validate_on_submit():
-            pass
-
-    return render_template("Inquiry_action.html", form=form, action_data=action_data)
-
-
 ###修改标书信息
 
 @login_required
@@ -372,7 +344,7 @@ def Edit_BID_data(device_id):
                 return render_template('edit_bid_data.html', form=form, user=user, device=device)
 
         # 默认显示
-        form.description.data=device.description
+        form.description.data = device.description
         form.IDnumber.data = device.IDnumber
         form.BIDnumber.data = device.BIDnumber
         form.BIDpassword.data = device.BIDpassword
@@ -383,7 +355,7 @@ def Edit_BID_data(device_id):
 @main.route('/Edit_action_data/<device_id>', methods=['GET', 'POST'])
 @permission_required(Permission.EDIT)
 def Edit_action_data(device_id):
-    device =Action.query.filter_by(id=device_id).first()
+    device = Action.query.filter_by(id=device_id).first()
 
     # 判断是否是管理员
     if 1:
@@ -430,7 +402,9 @@ def open_excel(file='file.xls'):
     except Exception as e:
         print(str(e))
 
- # 根据索引获取Excel表格中的数据   参数:file：Excel文件路径     colnameindex：表头列名所在行的所以  ，by_index：表的索引
+        # 根据索引获取Excel表格中的数据   参数:file：Excel文件路径     colnameindex：表头列名所在行的所以  ，by_index：表的索引
+
+
 def excel_table_byindex(file='file.xls', colnameindex=0, by_index=0):
     data = open_excel(file)
     table = data.sheets()[by_index]
@@ -446,34 +420,36 @@ def excel_table_byindex(file='file.xls', colnameindex=0, by_index=0):
             for i in range(len(colnames)):
                 app[colnames[i]] = row[i]
             list.append(app)
-    return list   #返回元素为字典的列表
+    return list  # 返回元素为字典的列表
 
 
 allowed_extensions = ['xls', 'xlsx']
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in allowed_extensions
 
 
 @login_required
-@main.route('/Create_auction', methods=['GET','POST'])
+@main.route('/Create_auction', methods=['GET', 'POST'])
 @permission_required(Permission.EDIT)
 def Create_auction():
     if request.method == 'POST':
         file = request.files['file']
         filename = file.filename
         print(filename)
-        #判断文件名是否合规
+        # 判断文件名是否合规
         if file and allowed_file(filename):
-            file.save(os.path.join(os.environ.get('upload'),filename))
+            file.save(os.path.join(os.environ.get('upload'), filename))
         else:
             flash('上传的格式不对')
             return render_template('Create_auction.html')
 
-         #添加到数据库
-        print(os.path.join(os.environ.get('upload'),filename))
-        tables = excel_table_byindex(file=os.path.join(os.environ.get('upload'),filename))
-        for row in tables:## 判断表格式是否对
+            # 添加到数据库
+        print(os.path.join(os.environ.get('upload'), filename))
+        tables = excel_table_byindex(file=os.path.join(os.environ.get('upload'), filename))
+        for row in tables:  ## 判断表格式是否对
             if '标书说明' not in row or \
                             '身份证号' not in row or \
                             '标书号' not in row or \
@@ -502,6 +478,7 @@ def Create_auction():
     else:
         return render_template('Create_auction.html')
 
+
 @login_required
 @main.route('/Create_action', methods=['GET', 'POST'])
 @permission_required(Permission.EDIT)
@@ -509,26 +486,26 @@ def Create_action():
     if request.method == 'POST':
         file = request.files['file']
         filename = file.filename
-        #判断文件名是否合规
+        # 判断文件名是否合规
         if file and allowed_file(filename):
-            file.save(os.path.join(os.environ.get('upload'),filename))
+            file.save(os.path.join(os.environ.get('upload'), filename))
         else:
             flash('上传的格式不对')
             return render_template('Create_action.html')
-        #添加到数据库
-        tables = excel_table_byindex(file=os.path.join(os.environ.get('upload'),filename))
-        for row in tables:## 判断表格式是否对
+        # 添加到数据库
+        tables = excel_table_byindex(file=os.path.join(os.environ.get('upload'), filename))
+        for row in tables:  ## 判断表格式是否对
             if '加价时间' not in row or \
-                        '加价幅度' not in row or \
-                        '截止时间' not in row or \
-                        '延迟时间' not in row or \
-                        '提前价格' not in row or \
-                        '日期' not in row or \
-                        '标书' not in row or \
-                        '拍手' not in row:
+                            '加价幅度' not in row or \
+                            '截止时间' not in row or \
+                            '延迟时间' not in row or \
+                            '提前价格' not in row or \
+                            '日期' not in row or \
+                            '标书' not in row or \
+                            '拍手' not in row:
                 flash('失败:excel表格式不对')
                 return render_template('Create_action.html')
-        ##### 判断手持机字段是否存在
+                ##### 判断手持机字段是否存在
             try:
                 device = Action(
                     refer_time=float(row['加价时间']),
@@ -557,3 +534,87 @@ def Create_action():
         return render_template('Create_action.html')
 
 
+# @login_required
+# @main.route('/serch/actions/<name>/<date>/<int:auction_id>/<int:action_id>',methods=['GET'])
+# @permission_required(Permission.EDIT)
+# def seach_actions(name,auction_id,action_id):
+#     pass
+#
+#
+# @login_required
+# @main.route('/serch/auctions/<name>/<date>/<int:auction_id>/<int:action_id>',methods=['GET'])
+# @permission_required(Permission.EDIT)
+# def seach_auctions(name,auction_id,action_id):
+#     pass
+
+
+@login_required
+@main.route('/serch', methods=['GET'])
+@permission_required(Permission.EDIT)
+def seach():
+    date_month = ["17年%d月" % i for i in range(8, 13)]
+    date_month2 = ["18年%d月" % i for i in range(1, 13)]
+    date_month.extend(date_month2)
+    dates = date_month
+    auctions = Auction.query.order_by(Auction.description).all()
+    users = User.query.order_by(User.username).all()
+    return render_template('serch_auction.html', dates=dates, auctions=auctions, users=users)
+
+
+@login_required
+@main.route('/serch_auctions', methods=['GET'])
+@permission_required(Permission.EDIT)
+def seach_auctions():
+    date = request.args.get('date')
+    auction = request.args.get('auction')
+    action = request.args.get('username')
+    if date == "all":
+        actions = Action.query.all()
+    else:
+        actions = Action.query.filter_by(date=date).all()
+
+    return render_template('auctions.html', actions=actions)
+
+
+@login_required
+@main.route('/serch_actions', methods=['GET'])
+@permission_required(Permission.EDIT)
+def seach_actions():
+    date = request.args.get('date')
+    auction = request.args.get('auction')
+    action = request.args.get('username')
+    if date == "all":
+        actions = Action.query.all()
+    else:
+        actions = Action.query.filter_by(date=date).all()
+
+    return render_template('actions.html', actions=actions)
+
+
+# 查询功能创建
+@login_required
+@main.route('/Inquiry_data', methods=['GET'])
+@permission_required(Permission.EDIT)
+def Inquiry_auction():
+    date_month = ["17年%d月" % i for i in range(8, 13)]
+    date_month2 = ["18年%d月" % i for i in range(1, 13)]
+    date_month.extend(date_month2)
+    dates = date_month
+    auctions = db.session.query(Auction).all()
+    users = User.query.order_by(User.username).all()
+    return render_template('serch_auction.html', dates=dates, auctions=auctions, users=users)
+
+
+@login_required
+@main.route('/Inquiry_action', methods=['GET'])
+@permission_required(Permission.EDIT)
+def Inquiry_action():
+    date_month = ["17年%d月" % i for i in range(8, 13)]
+    date_month2 = ["18年%d月" % i for i in range(1, 13)]
+    date_month.extend(date_month2)
+    dates = date_month
+    auctions = Auction.query.order_by(Auction.description).all()
+    users = User.query.order_by(User.username).all()
+    actions = Action.query.order_by(Action.refer_time).all()
+    return render_template('serch_action.html', dates=dates, auctions=auctions,
+                           users=users, actions=actions)

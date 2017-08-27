@@ -54,7 +54,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ url_for('main.Inquiry_action') }}">修改策略</a></li>
-                        <li><a href="{{ url_for('main.Inquiry_data') }}">修改标书信息</a></li>
+                        <li><a href="{{ url_for('main.Inquiry_auction') }}">修改标书信息</a></li>
                     </ul>
                 </li>
                 {% endif %}
@@ -114,6 +114,14 @@
 
 {% block content %}
 {{ super() }}
+<div class="container">
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+<button type="button" class="close" data-dismiss="alert">&times;</button>
+{{ message }}
+</div>
+{% endfor %}
+
 {% block page_content %}{% endblock %}
 {% endblock %}
 

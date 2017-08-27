@@ -1,0 +1,23 @@
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>标书说明</th>
+        <th>身份证</th>
+        <th>标书号</th>
+        <th>密码</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for data in actions %}
+    <tr>
+        <td> {{data.auction.description}} </td>
+        <td> {{data.auction.IDnumber}} </td>
+        <td> {{data.auction.BIDnumber}} </td>
+        <td> {{data.auction.BIDpassword}} </td>
+        <td>  <a href={{ url_for('main.Edit_BID_data',device_id=data.id) }}> 修改 </a>  </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>

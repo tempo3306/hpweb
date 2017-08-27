@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}综合查询{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="page-header">
+    </div>
+
+    <table class="table table-hover" align="center">
+        <caption style="font-size:20px">标书信息</caption>
+        <thead>
+        <tr class="active">
+            <th width="10%" align="center" valign="center"
+                style="text-align:center;font-size:18px;letter-spacing:3px;vertical-align:middle">日期
+            </th>
+            <th>
+                <select class="form-control" id="date">
+                    <option value="all">All</option>
+                    {%for date in dates %}
+                    <option value={{date}}>{{date}}</option>
+                    {%endfor%}
+                </select>
+            </th>
+            <th
+            <th width="10%" align="center" valign="center"
+                style="text-align:center;font-size:18px;letter-spacing:3px;vertical-align:middle">标书
+            </th>
+            <th>
+                <select class="form-control" id="auction">
+                    <option value="all">All</option>
+                    {%for auction in auctions %}
+                    <option value={{auction}}>{{auction.description}}</option>
+                    {%endfor%}
+                </select>
+
+            </th>
+            <th width="10%" align="center" valign="center"
+                style="text-align:center;font-size:18px;letter-spacing:3px;vertical-align:middle">拍手
+            </th>
+            <th>
+                <select class="form-control" id="username">
+                    <option value="all">All</option>
+                    {%for user in users %}
+                    <option value={{user.username}}>{{user.username}}</option>
+                    {%endfor%}
+                </select>
+            </th>
+
+            <th>
+                <button id="serch" type="submit" class="btn btn-default">查询</button>
+            </th>
+        </tr>
+
+    </table>
+
+
+    <div id="serchresult">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>标书说明</th>
+      <th>身份证</th>
+      <th>标书号</th>
+      <th>密码</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for data in auctions %}
+    <tr>
+      <td> {{data.description}} </td>
+      <td> {{data.IDnumber}} </td>
+      <td> {{data.BIDnumber}} </td>
+      <td> {{data.BIDpassword}} </td>
+      <td>  <a href={{ url_for('main.Edit_BID_data',device_id=data.id) }}> 修改 </a>  </td>
+    </tr>
+     {% endfor %}
+
+  </tbody>
+</table>
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#serch").click(function(){var date=$('#date').val();var auction=$('#auction').val();
+  var username=$('#username').val();
+  var data={date:date,auction:auction,username:username};
+  var url='/serch_auctions';
+  $.get(url,data,function(result){
+    $("#serchresult").html(result);});});})
+
+</script>
+
+
+{% endblock %}
