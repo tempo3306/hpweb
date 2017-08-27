@@ -27,8 +27,8 @@ class BID_actionForm(Form):
     bid_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
     delay_time_choices=[(i*0.1,"0.%d"%i) for i in range(10)]
     ahead_price_choices=[(i*100,i*100) for i in range(4)]
-    date_month=[("17年%d月"%i,"17年%d月"%i)  for i in range(8,13)]
-    date_month2=[("18年%d月"%i,"18年%d月"%i) for i in range(1,13)]
+    date_month=[("2017年%d月"%i,"2017年%d月"%i)  for i in range(8,13)]
+    date_month2=[("2018年%d月"%i,"2018年%d月"%i) for i in range(1,13)]
     date_month.extend(date_month2)
 
     refer_time = SelectField(u"加价时间",coerce=float,choices=refer_time_choices,default=(50,50)) #参考时间
