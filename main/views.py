@@ -620,3 +620,22 @@ def Inquiry_action():
     actions = Action.query.order_by(Action.refer_time).all()
     return render_template('serch_action.html', dates=dates, auctions=auctions,
                            users=users, actions=actions)
+
+@login_required
+@main.route('/rules', methods=['GET'])
+@permission_required(Permission.SEARCH)
+def rules():
+    return render_template('rules.html')
+
+
+@login_required
+@main.route('/coursestudy', methods=['GET'])
+@permission_required(Permission.SEARCH)
+def coursestudy():
+    return render_template('ourseofstudy.html')
+
+@login_required
+@main.route('/softwarestudy', methods=['GET'])
+@permission_required(Permission.SEARCH)
+def softwarestudy():
+    return render_template('ourseofstudy.html')
