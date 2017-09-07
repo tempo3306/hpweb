@@ -625,14 +625,14 @@ def Inquiry_action():
 @main.route('/rules', methods=['GET'])
 @permission_required(Permission.SEARCH)
 def rules():
-    return render_template('rules.html')
+    return render_template('/create/rules.html')
 
 
 @login_required
 @main.route('/coursestudy', methods=['GET'])
 @permission_required(Permission.SEARCH)
 def coursestudy():
-    return render_template('ourseofstudy.html')
+    return render_template('/create/introduce.html')
 
 @login_required
 @main.route('/softwarestudy', methods=['GET'])
