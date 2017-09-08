@@ -6,6 +6,7 @@ from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, \
     CommentForm, BulletinForm, FileForm, BID_dataForm, BID_actionForm, InquiryForm, \
     Edit_BID_dataForm, Edit_BID_actionForm
+from ..auth.forms import LoginForm
 
 from .. import db
 from ..models import User, Role, Permission, Auction, Action
@@ -621,21 +622,26 @@ def Inquiry_action():
     return render_template('serch_action.html', dates=dates, auctions=auctions,
                            users=users, actions=actions)
 
-@login_required
-@main.route('/rules', methods=['GET'])
-@permission_required(Permission.SEARCH)
+@main.route('/rules', methods=['GET','POST'])
 def rules():
-    return render_template('/create/rules.html')
+    if current_user.is_anonymous:
+        return redirect(url_for('auth.login',next='/rules'))
+    else:
+        return render_template('/create/rules.html')
 
 
-@login_required
-@main.route('/coursestudy', methods=['GET'])
-@permission_required(Permission.SEARCH)
+@main.route('/coursestudy', methods=['GET','POST'])
 def coursestudy():
-    return render_template('/create/introduce.html')
+    if current_user.is_anonymous:
+        return redirect(url_for('auth.login', next='/coursestudy'))
+    else:
+        return render_template('/create/rules.html')
 
-@login_required
-@main.route('/softwarestudy', methods=['GET'])
-@permission_required(Permission.SEARCH)
+@main.route('/softwarestudy', methods=['GET','POST'])
 def softwarestudy():
-    return render_template('ourseofstudy.html')
+    if current_user.is_anonymous:
+        return redirect(url_for('auth.login', next='/softwarestudy'))
+    else:
+        return render_template('/create/rules.html')
+
+

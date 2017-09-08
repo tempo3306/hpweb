@@ -9,7 +9,6 @@ from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
     PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
 
 
-
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
