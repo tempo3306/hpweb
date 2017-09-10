@@ -151,6 +151,9 @@ class Auction(db.Model):
     IDnumber = db.Column(db.String)
     BIDnumber = db.Column(db.Integer)
     BIDpassword = db.Column(db.Integer)
+    status=db.Column(db.Integer)  #0代表失效(有效期已过，或次数到期)，1代表正常拍牌，4代表异常（标书被收回）,3代表等待激活中,6代表中标
+    count=db.Column(db.Integer)  #剩余次数
+    expirydate=db.Column(db.String) #截止时间
     # author_id = db.Column(db.Integer, db.ForeignKey('users.id'))  # 对应backref
     actions = db.relationship('Action', backref='auction', lazy='dynamic')
 

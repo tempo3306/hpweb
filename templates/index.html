@@ -6,99 +6,123 @@
 
 {% block page_content %}
 
+<section class="content-wrap">
+    <div class="container" style="  margin-top: 35px">
+        <div class="row">
 
-<div class="container sections-wrapper">
-    <div class="row">
-        <div class="primary col-md-8 col-sm-12 col-xs-12">
-            <section class="about section">
-                <div class="section-inner">
-                    <h2 class="heading">沪牌动态</h2>
-                    <div class="content">
-                        <p>专业代拍团队</p>
+            <main class="col-md-8 main-content">
+                <!--<div class="container sections-wrapper">-->
+                <!--<div class="row">-->
+                <!--<div class="primary col-md-8 col-sm-12 col-xs-12">-->
+                <!--<section class="about section">-->
+                <!--<div class="section-inner">-->
+                <!--<h2 class="heading">沪牌动态</h2>-->
 
-                        <p>专业代拍团队</p>
+
+                <article id=1 class="post">
+                    <div class="post-head">
+                        <h1 class="post-title"><a href="/custom-excerpts/">拍牌教程</a></h1>
+                        <div class="post-meta">
+                            <span class="author">作者：zs</span> &bull;
+                            <time class="post-date" datetime="2017年9月9日星期六下午4点57分" title="2017年9月9日星期三下午4点57分">
+                                2017年9月9日
+                            </time>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>为了快速了解拍牌流程，精心准备了一套完整的拍牌教程。</p>
+                    </div>
+                    <div class="post-permalink">
+                        <a href="{{url_for('main.coursestudy')}}" class="btn btn-default" target="_blank">阅读全文</a>
+                    </div>
+
+                    <footer class="post-footer clearfix">
+                        <div class="pull-left tag-list">
+                            <i class="fa fa-folder-open-o"></i>
+
+                        </div>
+                        <div class="pull-right share">
+                        </div>
+                    </footer>
+                </article>
+
+
+                <article id=2 class="post">
+                    <div class="post-head">
+                        <h1 class="post-title"><a href="/custom-excerpts/">拍手规定</a></h1>
+                        <div class="post-meta">
+                            <span class="author">作者：zs</span> &bull;
+                            <time class="post-date" datetime="2017年9月9日星期六下午4点57分" title="2017年9月9日星期三下午4点57分">
+                                2017年9月9日
+                            </time>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <p>拍手每次参拍会得到应有的奖励，表现出色可以得到额外的奖励。</p>
+                    </div>
+                    <div class="post-permalink">
+                        <a href="{{url_for('main.rules')}}" class="btn btn-default" target="_blank">阅读全文</a>
+                    </div>
+
+                    <footer class="post-footer clearfix">
+                        <div class="pull-left tag-list">
+                            <i class="fa fa-folder-open-o"></i>
+
+                        </div>
+                        <div class="pull-right share">
+                        </div>
+                    </footer>
+                </article>
+
+            </main>
+
+
+            <aside class="col-md-4 sidebar">
+                <!-- start widget -->
+                <!-- end widget -->
+
+                <!-- start tag cloud widget -->
+                <div class="widget">
+                    <h4 class="title">官网</h4>
+                    <div class="content community">
+                        <p>QQ：810909753</p>
+                        <p><a href="/" title="小鲜肉代拍" target="_blank"
+                              onclick="_hmt.push(['_trackEvent', 'big-button', 'click', '官方网站'])"><i
+                                class="fa fa-comments"></i>
+                            官方网站</a></p>
+
                     </div>
                 </div>
-            </section>
+                <!-- end tag cloud widget -->
+
+                <!-- start widget -->
+                <div class="widget">
+                    <h4 class="title">软件下载</h4>
+                    <div class="content download">
+                        <a href="/download/" class="btn btn-default btn-block"
+                           onclick="_hmt.push(['_trackEvent', 'big-button', 'click', '下载软件'])">小鲜肉拍牌</a>
+                    </div>
+                </div>
+                <!-- end widget -->
+
+                <!-- start tag cloud widget -->
+                <div class="widget">
+                    <h4 class="title">标签</h4>
+                    <div class="content tag-cloud">
+                        <a href="{{url_for('main.coursestudy')}}" target="_blank">教程</a>
+                        <a href="{{url_for('main.rules')}}" target="_blank">规定</a>
+                        <a href=" ">软件教程</a>
+
+
+
+                        <a href="/tag-cloud/">...</a>
+                    </div>
+                </div>
+            </aside>
         </div>
-        <section class="latest section">
-            <div class="secondary col-md-4 col-sm-12 col-xs-12">
-                <aside class="info aside section">
-                    <div class="section-inner">
-                        <h2 class="heading sr-only">Basic Information</h2>
-                        <div class="content">
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-map-marker"></i><span class="sr-only">Location:</span>上海
-                                </li>
-                                <li><i class="fa fa-envelope-o"></i><span class="sr-only">Email:</span><a href="#">810909753@qq.com</a>
-                                </li>
-                                <li><i class="fa fa-link"></i><span class="sr-only">Website:</span><a href="#">http://www.hupaimarket.com</a>
-                                </li>
-                            </ul>
-                        </div><!--//content-->
-                    </div><!--//section-inner-->
-                </aside><!--//aside-->
-
-                <aside class="skills aside section">
-                    <div class="section-inner">
-                        <h2 class="heading">专业代拍</h2>
-                        <div class="content">
-                            <p class="intro">
-                                加入我们，还你沪牌</p>
-
-                            <div class="skillset">
-
-                                <div class="item">
-                                    <h3 class="level-title">专业拍牌软件<span class="level-label"
-                                                                                     data-toggle="tooltip"
-                                                                                     data-placement="left"
-                                                                                     data-animation="true"
-                                                                                     title="You can use the tooltip to add more info..."> </span>
-                                    </h3>
-                                    <div class="level-bar">
-                                        <div class="level-bar-inner" data-level="96%">
-                                        </div>
-                                    </div><!--//level-bar-->
-                                </div><!--//item-->
-
-                                <!--<div class="item">-->
-                                    <!--<h3 class="level-title">Javascript &amp; jQuery<span-->
-                                            <!--class="level-label">Expert</span></h3>-->
-                                    <!--<div class="level-bar">-->
-                                        <!--<div class="level-bar-inner" data-level="96%">-->
-                                        <!--</div>-->
-                                    <!--</div>&lt;!&ndash;//level-bar&ndash;&gt;-->
-                                <!--</div>&lt;!&ndash;//item&ndash;&gt;-->
-
-                                <!--<div class="item">-->
-                                    <!--<h3 class="level-title">HTML5, CSS3, SASS &amp; LESS<span-->
-                                            <!--class="level-label">Expert</span></h3>-->
-                                    <!--<div class="level-bar">-->
-                                        <!--<div class="level-bar-inner" data-level="96%">-->
-                                        <!--</div>-->
-                                    <!--</div>&lt;!&ndash;//level-bar&ndash;&gt;-->
-                                <!--</div>&lt;!&ndash;//item&ndash;&gt;-->
-
-                                <!--<div class="item">-->
-                                    <!--<h3 class="level-title">Ruby on Rails<span class="level-label">Pro</span></h3>-->
-                                    <!--<div class="level-bar">-->
-                                        <!--<div class="level-bar-inner" data-level="85%">-->
-                                        <!--</div>-->
-                                    <!--</div>&lt;!&ndash;//level-bar&ndash;&gt;-->
-                                <!--</div>&lt;!&ndash;//item&ndash;&gt;-->
-
-                                <!--<p><a class="more-link" href="#"><i class="fa fa-external-link"></i> More on-->
-                                    <!--Coderwall</a></p>-->
-                            </div>
-                        </div><!--//content-->
-                    </div><!--//section-inner-->
-                </aside><!--//section-->
-            </div>
-        </section>
-
-
     </div>
-</div>
+</section>
+
 
 
 {% endblock %}

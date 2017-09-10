@@ -255,7 +255,6 @@ def bid_data():
     # 判断是否是管理员
     user = User.query.filter_by(username=current_user.username).first()
     form = BID_dataForm()
-
     if form.validate_on_submit():
 
         # id格式化
@@ -264,7 +263,9 @@ def bid_data():
             description=form.description.data,
             IDnumber=form.IDnumber.data,
             BIDnumber=form.BIDnumber.data,
-            BIDpassword=form.BIDpassword.data
+            BIDpassword=form.BIDpassword.data,
+            count=form.count.data,
+            status=form.status.data
         )
 
         # 判断标书是否存在
@@ -330,19 +331,18 @@ def Edit_BID_data(device_id):
             if temp.count('delete') > 0:
                 db.session.delete(device)
             else:
-                device = Auction(
-                    description=form.description.data,
-                    IDnumber=form.IDnumber.data,
-                    BIDnumber=form.BIDnumber.data,
-                    BIDpassword=form.BIDpassword.data
-                )
-
+                device.description=form.description.data
+                device.IDnumber=form.IDnumber.data
+                device.BIDnumber=form.BIDnumber.data
+                device.BIDpassword=form.BIDpassword.data
+                device.count = form.count.data
+                device.status = form.status.data
                 # 判断标书是否存在
                 flag = True
                 if Auction.query.filter_by(IDnumber=device.IDnumber).count() > 0:
                     flash('该身份证已存在')
                 else:
-                    db.session.add(device)
+                    db.session.commit()
                     flash(u"修改成功")
                 return render_template('edit_bid_data.html', form=form, user=user, device=device)
 
@@ -371,17 +371,14 @@ def Edit_action_data(device_id):
             if temp.count('delete') > 0:
                 db.session.delete(device)
             else:
-                device = Action(
-                    diff=form.diff.data,
-                    refer_time=form.refer_time.data,
-                    bid_time=form.bid_time.data,
-                    delay_time=form.delay_time.data,
-                    ahead_price=form.ahead_price.data,
-                    date=form.date.data,
-                    auction=Auction.query.get(form.auction_use.data),
-                    author=User.query.get(form.action_user.data)
-                )
-                db.session.add(device)
+                device.diff = form.diff.data
+                device.refer_time = form.refer_time.data
+                device.bid_time = form.bid_time.data
+                device.delay_time = form.delay_time.data
+                device.ahead_price = form.ahead_price.data
+                device.date=form.date.data
+                device.auction=Auction.query.get(form.auction_use.data)
+                device.author=User.query.get(form.action_user.data)
                 db.session.commit()
                 flash(u"修改成功")
                 return render_template('edit_bid_action.html', form=form, user=user, device=device)
@@ -464,7 +461,11 @@ def Create_auction():
                     description=row['标书说明'],
                     IDnumber=row['身份证号'],
                     BIDnumber=int(row['标书号']),
-                    BIDpassword=int(row['标书密码'])
+                    BIDpassword=int(row['标书密码']),
+                    expirydate=str(row['有效期截止时间']),
+                    count=int(row['剩余次数']),
+                    status=int(row['状态'])
+
                 )
             except:
                 flash('失败:excel表格式不对')

@@ -5,7 +5,9 @@ from wtforms.validators import DataRequired, Length, Email, Regexp
 from wtforms import ValidationError
 from flask_pagedown.fields import PageDownField
 from ..models import Role, User ,Auction
-from wtforms import StringField, PasswordField, BooleanField, SubmitField,FieldList,FileField,SelectField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField,FieldList,FileField,\
+    SelectField,DateField
+import time
 
 class NameForm(Form):
     name = StringField('What is your name?', validators=[DataRequired()])
@@ -14,29 +16,40 @@ class NameForm(Form):
 
 class BID_dataForm(Form):
 #  IDnumber = SelectField("设备类型", choices=[('手持机', '手持机'), ('脚扣', '脚扣')])
-    description= StringField("标书说明",validators=[DataRequired()])
+    count_num=[(i,"%d次"%i) for i in range(7)]
+    status_data=[(0,"失效"),(1,"正常"),(4,"已被收回"),(3,"激活中"),(6,"已中标")]
+
+    description= StringField("标书说明",validators=[DataRequired()],render_kw={'placeholder': u"请输入标书姓名"})
     IDnumber = StringField("身份证号", validators=[DataRequired(),Length(18),Regexp('^[0-9](X|x){0,1}',message=u'请输入正确的身份证号')])
     BIDnumber = StringField("标书号", validators=[DataRequired(),Length(8),Regexp('^[0-9]',message=u'请输入正确的标书号')])
     BIDpassword = StringField("标书密码", validators=[DataRequired(),Length(4),Regexp('^[0-9]',message=u'请输入正确的标书密码')])
+    count=SelectField(u"剩余次数",coerce=int,choices=count_num,default=6)
+    expirydate=DateField(u"有效期截止时间",format='%Y/%m/%d',validators=[DataRequired()],
+                          render_kw={'placeholder': '2017/09/01'})
+    status=SelectField(u"当前状态",coerce=int,choices=status_data,default=1)
 # 提交按钮
     submit = SubmitField('创建标书号')
 
 class BID_actionForm(Form):
     diff_choices=[(i*100+400,i*100+400) for i in range(12)]
     refer_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
-    bid_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
+    bid_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(171)]
     delay_time_choices=[(i*0.1,"0.%d"%i) for i in range(10)]
     ahead_price_choices=[(i*100,i*100) for i in range(4)]
     date_month=[("2017年%d月"%i,"2017年%d月"%i)  for i in range(8,13)]
     date_month2=[("2018年%d月"%i,"2018年%d月"%i) for i in range(1,13)]
     date_month.extend(date_month2)
+    defaultdate_list=time.strftime("%Y %m",time.localtime(time.time())).split()
+    defaultdate="%d年%d月"%(int(defaultdate_list[0]),int(defaultdate_list[1]))
 
-    refer_time = SelectField(u"加价时间",coerce=float,choices=refer_time_choices,default=(50,50)) #参考时间
-    diff = SelectField(u"相差价格",coerce=int, choices=diff_choices) #参考时间差价
-    bid_time = SelectField(u"强制出价时间",coerce=float,choices=bid_time_choices,default=(55,55)) #出价截止时间
-    delay_time = SelectField(u"出价延迟",coerce=float, choices=delay_time_choices) #出价延迟时间，0.1~0.9
-    ahead_price = SelectField(u"出价提前",coerce=int,choices=ahead_price_choices,default=(100,100)) #出价提前价格
-    date= SelectField(u"拍牌月份",coerce=str,choices=date_month,default=date_month[0])
+
+    refer_time = SelectField(u"加价时间",coerce=float,choices=refer_time_choices,
+                             default=50) #参考时间
+    diff = SelectField(u"相差价格",coerce=int, choices=diff_choices,default=700) #参考时间差价
+    bid_time = SelectField(u"强制出价时间",coerce=float,choices=bid_time_choices,default=55.5) #出价截止时间
+    delay_time = SelectField(u"出价延迟",coerce=float, choices=delay_time_choices,default=0.5) #出价延迟时间，0.1~0.9
+    ahead_price = SelectField(u"出价提前",coerce=int,choices=ahead_price_choices,default=100) #出价提前价格
+    date= SelectField(u"拍牌月份",coerce=str,choices=date_month,default=defaultdate)
     auction_use=SelectField("标书选择",coerce=int)
     action_user = SelectField('拍手选择：', coerce=int)
 # 提交按钮
@@ -54,11 +67,18 @@ class BID_actionForm(Form):
 
 
 class Edit_BID_dataForm(Form):
-    description = StringField("标书说明", validators=[DataRequired()])
+    count_num=[(i,"%d次"%i) for i in range(7)]
+    status_data=[(0,"失效"),(1,"正常"),(4,"已被收回"),(3,"激活中"),(6,"已中标")]
+
+    description= StringField("标书说明",validators=[DataRequired()] ,render_kw={'placeholder': u"请输入标书姓名"})
     IDnumber = StringField("身份证号", validators=[DataRequired(),Length(18),Regexp('^[0-9](X|x){0,1}',message=u'请输入正确的身份证号')])
     BIDnumber = StringField("标书号", validators=[DataRequired(),Length(8),Regexp('^[0-9]',message=u'请输入正确的标书号')])
     BIDpassword = StringField("标书密码", validators=[DataRequired(),Length(4),Regexp('^[0-9]',message=u'请输入正确的标书密码')])
+    count=SelectField(u"剩余次数",coerce=int,choices=count_num,default=6)
+    expirydate=DateField(u"有效期截止时间",format='%Y/%m/%d',validators=[DataRequired()],
+                          render_kw={'placeholder': '2017/09/01'})
 
+    status=SelectField(u"当前状态",coerce=int,choices=status_data,default=1)
 
 # 提交按钮
     submit = SubmitField('提交修改')
@@ -68,28 +88,27 @@ class Edit_BID_dataForm(Form):
 class Edit_BID_actionForm(Form):
     diff_choices=[(i*100+400,i*100+400) for i in range(12)]
     refer_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
-    bid_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(151)]
+    bid_time_choices=[(i*0.1+40,"%.1f"%(i*0.1+40)) for i in range(171)]
     delay_time_choices=[(i*0.1,"0.%d"%i) for i in range(10)]
     ahead_price_choices=[(i*100,i*100) for i in range(4)]
     date_month=[("2017年%d月"%i,"2017年%d月"%i)  for i in range(8,13)]
     date_month2=[("2018年%d月"%i,"2018年%d月"%i) for i in range(1,13)]
     date_month.extend(date_month2)
-
-    refer_time = SelectField(u"加价时间",coerce=float,choices=refer_time_choices,default=(50,50)) #参考时间
-    diff = SelectField(u"相差价格",coerce=int, choices=diff_choices) #参考时间差价
-    bid_time = SelectField(u"强制出价时间",coerce=float,choices=bid_time_choices,default=(55,55)) #出价截止时间
-    delay_time = SelectField(u"出价延迟",coerce=float, choices=delay_time_choices) #出价延迟时间，0.1~0.9
-    ahead_price = SelectField(u"出价提前",coerce=int,choices=ahead_price_choices,default=(100,100)) #出价提前价格
-    date= SelectField(u"拍牌月份",coerce=str,choices=date_month,default=date_month[0])
+    defaultdate_list=time.strftime("%Y %m",time.localtime(time.time())).split()
+    defaultdate="%d年%d月"%(int(defaultdate_list[0]),int(defaultdate_list[1]))
+    refer_time = SelectField(u"加价时间",coerce=float,choices=refer_time_choices,
+                             default=50) #参考时间
+    diff = SelectField(u"相差价格",coerce=int, choices=diff_choices,default=700) #参考时间差价
+    bid_time = SelectField(u"强制出价时间",coerce=float,choices=bid_time_choices,default=55.5) #出价截止时间
+    delay_time = SelectField(u"出价延迟",coerce=float, choices=delay_time_choices,default=0.5) #出价延迟时间，0.1~0.9
+    ahead_price = SelectField(u"出价提前",coerce=int,choices=ahead_price_choices,default=100) #出价提前价格
+    date= SelectField(u"拍牌月份",coerce=str,choices=date_month,default=defaultdate)
     auction_use=SelectField("标书选择",coerce=int)
     action_user = SelectField('拍手选择：', coerce=int)
     # 提交按钮
     submit = SubmitField(u'提交修改')
     delete = SubmitField(u'删除策略')
 
-# 提交按钮
-    submit = SubmitField(u'提交修改')
-    delete = SubmitField(u'删除策略')
 
     def __init__(self, user, *args, **kwargs):
         super(Edit_BID_actionForm, self).__init__(*args, **kwargs)
