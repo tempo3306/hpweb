@@ -201,6 +201,21 @@ class login_user(db.Model):
     MAC=db.Column(db.String)     #记录登录MAC地址
     COUNT=db.Column(db.Integer)  #登录状态
 
+#拍牌相关文章类
+class Bid_article(db.Model):
+    __tablename__="Bid_article"
+    id=db.Column(db.Integer,primary_key=True)
+    bid_article=db.Column(db.Text) #拍牌类文章
+    bid_article_title=db.Column(db.Text) #标题
+    bid_article_description=db.Column(db.Text) #概述，吸引人的关键信息
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+#验证码库
+class Yanzhengma(db.Model):
+    __tablename__="yanzhengma"
+    id=db.Column(db.Integer,primary_key=True)
+    picture=db.Column(db.String)  #路径名
+    answer=db.Column(db.String)   #答案
 
 
 #继承自Flask-Login 中的AnonymousUserMixin 类，并将其设为用户未登录时current_user 的值

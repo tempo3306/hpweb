@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	<head>
+		<title>沪牌第一枪模拟拍牌系统</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!-- Include CSS to eliminate any default margins/padding and set the height of the html element and
+		     the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as
+			 the percentage of the height of its parent container, which has to be set explicitly.  Initially,
+			 don't display flashContent div so it won't show if JavaScript disabled.
+		-->
+
+		<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script>
+	var answer={{answer}}
+</script>
+
+		<script src="{{url_for('static',filename='js/moni.js')}}"> </script>
+
+		<link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+		<link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="{{url_for('static',filename='css/moni.css')}}" rel="stylesheet">
+		<!-- Enable Browser History by replacing useBrowserHistory tokens with two hyphens -->
+		<!-- BEGIN Browser History required section -->
+
+		<!-- END Browser History required section -->
+
+	</head>
+
+	<body>
+		<!-- SWFObject's dynamic embed method replaces this alternative HTML content with Flash content when enough
+			 JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
+			 when JavaScript is disabled.
+		-->
+		<div id="outer" >
+			<div style="height:169px;">
+				<h2 style="padding: 20px 0px 10px 0;margin-top: 0px;text-align: center;"><font color="white">沪牌第一枪模拟拍牌系统</font></h2>
+			</div>
+		<!--</div>
+		<div id='mainbox'>-->
+			<div class='leftmainbox'>
+				<ul class='toptext'>
+					<li>沪牌第一枪模拟投拍拍卖会</li>
+					<li>模拟投放额度:9951</li>
+					<li>目前已投标人数</li>
+					<li>拍卖会起止时间:10:30至11:30</li>
+					<li>首次出价时段:10:30至11:00</li>
+					<li>修改出价时段:11:00至11:30</li>
+				</ul>
+
+				<ul class='bottomtext'>
+					<li><span>&nbsp&nbsp目前为修改出价时段</span></li>
+					<li><span>系统目前时间:</span><span class="systemtime"></span>
+						
+					</li>
+					<li><span>目前最低可成交价:</span><span class="leftprice"></span>
+						
+					</li>
+					<li><span>最低可成交价出价时间:</span><span class="lasttime"></span>
+						
+					</li>
+					<li><span>目前数据库接受处理价格区间:</span><span class="pricerange"></span>
+						
+					</li>
+				</ul>
+			</div>
+			<div class='rightmainbox'>
+				<p class='lowestprice'></p>
+				<input type="text" id='自定义加价' class='useraddprice' checked="checked">
+				<input type="text" id='自定义写价' class='userwriteprice' checked="checked">
+				<button id='b1'></button>
+				<button id='b2'></button>
+				<button id='b3'></button>
+				<button id='b4'></button>
+				<button id='b5'></button>
+				<button id='b6'></button>
+				<button id='jiajia'></button>
+				<button id='chujia'></button>
+				<ul class=righttext>
+					<li id="li1">您第一次出价</li>
+					<li id="li2">出价金额:100</li>
+					<li id="li3">出价时间:2017-7-9 10:30:5</li>
+					<li>出价方式:网络出价</li>
+				</ul>
+
+			</div>
+			<!--隐藏对话框  验证码输入框-->
+			<div id="dialog-form">
+				<div class='identify'>
+					<div></div>
+					<img src={{url_for('static',filename=yan)}} class="yanzhengma"></img>
+					<input type="text" id='inputyanzhengma' class='inputyanzhengma' checked="checked">
+					<p class="question">请输入苹果行数字</p>
+					<button class="confirm"></button>
+					<button class="cancel"></button>
+				</div>
+			</div>
+			<!--隐藏对话框 提示验证码请求过于频繁-->
+			<div id="info-quick">
+				<div class='tooquick'>
+					<div></div>
+					<div></div>
+					<button class="middleconfirm"></button>
+				</div>
+			</div>
+			<!--出价过快提示-->
+			<div id="info-tooquick">
+				<div class='tooquick'>
+					<div></div>
+					<div></div>
+					<button class="middleconfirm"></button>
+				</div>
+			</div>
+			<!--出价验证码错误提示-->
+			<div id="info-wrongcode">
+				<div class='tooquick'>
+					<p>请输入正确的校验码</p>
+					<button class="middleconfirm_wrongcode"></button>
+				</div>
+			</div>
+			<!--价格必须为100错误提示-->
+			<div id="info-wrongprice">
+				<div class='tooquick'>
+					<p>投标金额必须为100的正整倍数。</p>
+					<button class="middleconfirm_wrongprice"></button>
+				</div>
+			</div>
+
+			<!--出价处理-->
+			<div id="price-form">
+				<div class='priceoperation'>
+					<span class="progressbar-bg"></span>
+					<span class="progressbar"></span>
+				</div>
+			</div>
+
+			<!--出价成功-->
+			<div id="price-right">
+				<div class='price_right'>
+					<p>出价有效</p>
+					<button class="middleconfirm_priceright"></button>
+				</div>
+			</div>
+			<!--出价不在区间-->
+			<div id="price-wrong">
+				<div class='price-wrong'>
+					<p>您的出价不在修改出价区间内，请重新出价</p>
+					<button class="middleconfirm_pricewrong"></button>
+				</div>
+			</div>
+			<!--出价超时-->
+			<div id="outoftime">
+				<div class='outoftime'>
+					<p>您的出价超出截止时间</p>
+					<button class="middleconfirm_outoftime"></button>
+				</div>
+			</div>
+			<!--结果提示-->
+			<div id="info-result-failure">
+				<div class='tooquick'>
+					<p>很遗憾，你没有中标</p>
+					<button class="middleconfirmfailure"></button>
+				</div>
+			</div>
+			<div id="info-result-success">
+				<div class='tooquick'>
+					<p>恭喜你，中标了</p>
+					<button class="middleconfirmsuccess"></button>
+				</div>
+			</div>
+			<div id="final-info">
+				<div class='final-info'>
+					<div class='finaltext'>本次拍牌结束啦,请关注我们微信公众号——沪牌第一枪。<br>任何问题可以联系我们</div>
+
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

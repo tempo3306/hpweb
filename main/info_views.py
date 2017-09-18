@@ -6,7 +6,7 @@ from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, \
     CommentForm, BulletinForm, FileForm, BID_dataForm, BID_actionForm, InquiryForm, \
     Edit_BID_dataForm, Edit_BID_actionForm
-from .info_forms import PostForm
+from .info_forms import PostForm,Bid_articleForm
 from .. import db
 from ..models import User, Role, Permission,  Auction, Action
 from ..info_models import Article
@@ -55,3 +55,22 @@ def article(title):
         abort(404)
     posts = article.order_by(Article.timestamp.desc()).all()
     return render_template('article.html', user=user, posts=posts)
+
+# @main.route('/news/<title>')
+# def news(title):
+#     user = Article.query.filter_by(title=title).first()
+#     if user is None:
+#         abort(404)
+#     posts = article.order_by(Article.timestamp.desc()).all()
+#     return render_template('article.html', user=user, posts=posts)
+
+@main.route('/CreateBid_article')
+def CreateBid_article():
+    form=Bid_articleForm()
+    return render_template("CreateBid_article.html",form=form)
+
+@main.route('/Moni')
+def Moni():
+    yan="code/yan0.jpg"
+    answer=1356
+    return render_template("Moni.html",yan=yan,answer=answer)

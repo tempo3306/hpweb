@@ -1,0 +1,651 @@
+		<style>
+			body {
+				height: 100%;
+				width:100%;
+				left:10%
+			}
+			
+			body {
+				margin: 0 auto;
+				padding: 0;
+				text-align: center;
+				background-color: #FFFFFF;
+				position:absolute;
+			}
+	    #outer{margin:auto;
+	    background-image:url(../img/background.jpg);
+	    width:900px;
+	    height:705px;
+	    position: absolute;
+	    top:0px}
+
+		#mainbox{
+				text-align: center;
+				margin:0 auto;
+				background-color: red;
+				width:900px;
+				height: 705px;
+			}
+			
+			.leftmainbox {
+				background-image: url(../img/info.png);
+				position: absolute;
+				top: 169px;
+				left: 22px;
+				width: 379px;
+				height: 476px;
+			}
+			
+			.final-info {
+				background-image: url(../img/info.png);
+				position: absolute;
+				width: 379px;
+				height: 476px;
+			}
+			
+			.finaltext {
+				position: absolute;
+				top: 97px;
+				margin: 0;
+				padding: 0px;
+				left: 13px;
+				list-style-type: none;
+				text-align: left;
+				line-height: 16px;
+				color: blue;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 14px;
+				font-family: "宋体";
+				width: 300px;
+			}
+			
+			.rightmainbox {
+				background-image: url(../img/bid.png);
+				position: absolute;
+				top: 169px;
+				left: 427px;
+				width: 452px;
+				height: 476px;
+			}
+			
+			.toptext {
+				position: absolute;
+				top: 95px;
+				margin: 0 auto;
+				left: 11px;
+				padding: 0px;
+				list-style-type: none;
+				text-align: left;
+				line-height: 16px;
+				color: red;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 14px;
+				font-family: "宋体";
+			}
+			
+			.bottomtext {
+				position: absolute;
+				top: 207px;
+				margin: 0;
+				padding: 0px;
+				left: 11px;
+				list-style-type: none;
+				text-align: left;
+				line-height: 16px;
+				color: blue;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 14px;
+				font-family: "宋体";
+				width: 300px;
+			}
+			
+			.bottomtext span {
+				margin: 0px;
+				padding: 0px;
+				border: none;
+			}
+			
+			.systemtime {
+				color: red;
+				float:left;
+				margin: 0;
+				padding: 0px;
+				border: none;
+				position: absolute;
+				list-style-type: none;
+				text-align: left;
+				line-height: 16px;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 14px;
+				font-family: "宋体";
+			}
+			
+			.lasttime {
+				color: red;
+				margin: 0 auto;
+				padding: 0px;
+				border: none;
+				position: absolute;
+				list-style-type: none;
+				text-align: left;
+				line-height: 16px;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 14px;
+				font-family: "宋体";
+			}
+			
+			.leftprice {
+				color: red;
+				margin: 0 auto;
+				padding: 0px;
+				border: none;
+				position: absolute;
+				list-style-type: none;
+				text-align: left;
+				line-height: 16px;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 14px;
+				font-family: "新宋体";
+				font-weight: bold;
+			}
+			
+			.pricerange {
+				color: red;
+				margin: 0 auto;
+				padding: 0px;
+				border: none;
+				position: absolute;
+				list-style-type: none;
+				text-align: left;
+				line-height: 16px;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 14px;
+				font-family: "宋体";
+			}
+			
+			.lowestprice {
+				position: absolute;
+				top: 93px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 220px;
+				list-style-type: none;
+				text-align: left;
+				line-height: 22px;
+				color: red;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 20px;
+				font-family: "宋体";
+			}
+			
+			input.useraddprice {
+				background-color: transparent;
+				position: absolute;
+				top: 133px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 207px;
+				width: 103px;
+				height: 27px;
+				border: 0px;
+				outline: none;
+				text-align: center;
+				color: red;
+			}
+			
+			input.userwriteprice {
+				background-color: transparent;
+				position: absolute;
+				top: 237px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 190px;
+				width: 121px;
+				height: 27px;
+				border: 0px;
+				outline: none;
+				text-align: center;
+				color: red;
+			}
+			
+			.righttext {
+				position: absolute;
+				top: 331px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 10px;
+				list-style-type: none;
+				text-align: left;
+				line-height: 16px;
+				color: red;
+				word-spacing: 0px;
+				letter-spacing: 0px;
+				font-size: 14px;
+				font-family: "宋体";
+			}
+			
+			#b1 {
+				background-color: transparent;
+				position: absolute;
+				top: 165px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 190px;
+				width: 62px;
+				height: 30px;
+				border: none;
+				outline: none;
+			}
+			
+			#b2 {
+				background-color: transparent;
+				position: absolute;
+				top: 165px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 265px;
+				width: 62px;
+				height: 30px;
+				border: none;
+				outline: none;
+			}
+			
+			#b3 {
+				background-color: transparent;
+				position: absolute;
+				top: 165px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 340px;
+				width: 62px;
+				height: 30px;
+				border: none;
+				outline: none;
+			}
+			
+			#b4 {
+				background-color: transparent;
+				position: absolute;
+				top: 198px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 189px;
+				width: 62px;
+				height: 34px;
+				border: none;
+				outline: none;
+			}
+			
+			#b5 {
+				background-color: transparent;
+				position: absolute;
+				top: 198px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 265px;
+				width: 62px;
+				height: 34px;
+				border: none;
+				outline: none;
+			}
+			
+			#b6 {
+				background-color: transparent;
+				position: absolute;
+				top: 198px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 340px;
+				width: 62px;
+				height: 34px;
+				border: none;
+				outline: none;
+			}
+			
+			#jiajia {
+				background-color: transparent;
+				position: absolute;
+				top: 130px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 340px;
+				width: 67px;
+				height: 30px;
+				border: none;
+				outline: none;
+			}
+			
+			#chujia {
+				background-color: transparent;
+				position: absolute;
+				top: 237px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 339px;
+				width: 67px;
+				height: 30px;
+				border: none;
+				outline: none;
+			}
+			
+			.identify {
+				background-image: url(../img/code.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			.confirm {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 64px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			.cancel {
+				background-image: url(../img/cancel.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 254px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			.tooquick {
+				background-image: url(../img/tip.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			.middleconfirm {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 159px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			.middleconfirm_wrongcode {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 159px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			.middleconfirm_wrongprice {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 159px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			.middleconfirm_priceright {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 159px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			.middleconfirm_pricewrong {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 159px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			.middleconfirmsuccess {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 159px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			.middleconfirmfailure {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 159px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			#info-wrongcode {
+				background-image: url(../img/tip.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			#info-wrongcode p {
+				position: absolute;
+				left: 25px;
+				top: 85px;
+				font-family: "宋体";
+				font-size: 16px;
+			}
+			
+			#info-result-success p {
+				position: absolute;
+				left: 25px;
+				top: 85px;
+				font-family: "宋体";
+				font-size: 16px;
+			}
+			
+			#info-result-failure p {
+				position: absolute;
+				left: 25px;
+				top: 85px;
+				font-family: "宋体";
+				font-size: 16px;
+			}
+			
+			#info-wrongprice {
+				background-image: url(../img/tip.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			#info-wrongprice p {
+				position: absolute;
+				left: 25px;
+				top: 85px;
+				font-family: "宋体";
+				font-size: 16px;
+				letter-spacing: 1px;
+			}
+			
+			#info-tooquick {
+				background-image: url(../img/tip.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			#info-tooquick p {
+				position: absolute;
+				left: 25px;
+				top: 85px;
+				font-family: "宋体";
+				font-size: 16px;
+				letter-spacing: 1px;
+			}
+			
+			#outoftime {
+				background-image: url(../img/tip.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			#outoftime p {
+				position: absolute;
+				left: 25px;
+				top: 85px;
+				font-family: "宋体";
+				font-size: 16px;
+				letter-spacing: 1px;
+			}
+			
+			.middleconfirm_outoftime {
+				background-image: url(../img/confirm.png);
+				width: 115px;
+				height: 30px;
+				top: 249px;
+				left: 159px;
+				position: absolute;
+				padding: 0px;
+				margin: 0 auto;
+				border: none;
+				color: transparent;
+				outline: none;
+			}
+			
+			#price-right {
+				background-image: url(../img/tip.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			#price-right p {
+				position: absolute;
+				left: 25px;
+				top: 85px;
+				font-family: "宋体";
+				font-size: 16px;
+				letter-spacing: 1px;
+			}
+			
+			#price-wrong {
+				background-image: url(../img/tip.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			#price-wrong p {
+				position: absolute;
+				left: 25px;
+				top: 85px;
+				font-family: "宋体";
+				font-size: 16px;
+				letter-spacing: 1px;
+			}
+			
+			.priceoperation {
+				background-image: url(../img/price.png);
+				width: 439px;
+				height: 306px;
+			}
+			
+			.yanzhengma {
+				width: 113px;
+				height: 50px;
+				position: absolute;
+				top: 169px;
+				left: 64px;
+			}
+			
+			.inputyanzhengma {
+				width: 125px;
+				height: 32px;
+				position: absolute;
+				top: 167px;
+				left: 247px;
+				background-color: rgb(255, 235, 235);
+				outline: none;
+				text-align: center;
+				border: 1px solid #707070;
+				color: red;
+			}
+			
+			p.question {
+				position: absolute;
+				font-size: 15px;
+				top: 115px;
+				left: 32px;
+				color: #050505;
+				font-family: "宋体";
+				letter-spacing: 1px;
+			}
+			
+			.progressbar {
+				position: absolute;
+				top: 140px;
+				left: 40px;
+				width: 0px;
+				height: 38px;
+				background-color: rgb(0, 151, 255);
+			}
+			
+			.progressbar-bg {
+				position: absolute;
+				top: 140px;
+				left: 40px;
+				background-color: #000000;
+				width: 350px;
+				height: 38px;
+			}
+		}
+		</style>

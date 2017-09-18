@@ -194,3 +194,4 @@ class BulletinForm(Form):
     names = FieldList(StringField('名称'), label='物品列表', min_entries=1)
 
 
+#

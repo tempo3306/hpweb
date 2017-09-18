@@ -32,7 +32,8 @@ def create_app(config_name):
     moment.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
-    pagedown.init_app(app)
+    #Flask-PageDown 扩展定义了一个 PageDownField 类，这个类和 WTForms 中的 TextAreaField接口一致。
+    pagedown.init_app(app)    #初始化markdown
 
 
 
