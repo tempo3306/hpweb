@@ -212,7 +212,7 @@
 			function Read_price() {
 				usercode = $('.inputyanzhengma').val();
                 var temp_price=$('.userwriteprice').val();
-//				$('.inputyanzhengma').val("f");
+                $('#inputyanzhengma').val('');   //清空输入框
 				if(usercode != answer) {
 					$("#info-wrongcode").dialog("open");
 				} else if((userprice > lowestprice + 300) || (userprice < lowestprice - 300)) {
@@ -647,7 +647,8 @@
 					 else {
 						t = time_torrent*(realsecond-time_cut)+2
 					}
-					ProgressOn(t)
+
+					ProgressOn(t);
 				});
 
 				$(".middleconfirm_priceright").button().click(function() {
