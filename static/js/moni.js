@@ -165,6 +165,10 @@
 				count=0;
 				realsecond = 0;
 				viewsecond = 0;
+				usertime1=0;
+				usertime2=0;
+				userprice1=0;
+				userprice2=0;
 				//随机创建随机数
 				lowestprice = 87000 + parseInt((Math.random() - 0.35) * 40) * 100;
 //系统模块
@@ -619,6 +623,14 @@
 					var price100 = Price_confirm();
 					var interval1 = Interval();
 					if(price100 && interval1) {
+					var id=Math.floor(Math.random()*100+1);
+					var path_yanzhengma="/yanzhengma/"+id;
+					var path_answer="/answer/"+id;
+
+					$.get(path_answer,null,function(ret){question=ret.question;answer=ret.answer;});  //获取答案和问题
+					$('#question').text(question);
+
+ 					    $("#yanzhengma").load(path_yanzhengma);//加载验证码
 						$("#dialog-form").dialog("open");
 					} else if(!(interval1)) {
 						$("#info-tooquick").dialog("open")

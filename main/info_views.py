@@ -8,7 +8,7 @@ from .forms import EditProfileForm, EditProfileAdminForm, \
     Edit_BID_dataForm, Edit_BID_actionForm
 from .info_forms import PostForm,Bid_articleForm
 from .. import db
-from ..models import User, Role, Permission,  Auction, Action
+from ..models import User, Role, Permission,  Auction, Action,Yanzhengma
 from ..info_models import Article
 from ..decorators import admin_required, permission_required
 import os
@@ -74,3 +74,17 @@ def Moni():
     yan="code/yan0.jpg"
     answer=1356
     return render_template("Moni.html",yan=yan,answer=answer)
+
+@main.route('/yanzhengma/<id>',methods=['GET'])
+def yanzhengma(id):
+    yanzhengma=Yanzhengma.query.get(id)
+    yan=yanzhengma.picture
+    return render_template("yanzhengma.html",yan=yan)
+import json
+from flask import jsonify
+@main.route('/answer/<id>',methods=['GET'])
+def answer(id):
+    yanzhengma=Yanzhengma.query.get(id)
+    answer=yanzhengma.answer
+    question=yanzhengma.question
+    return jsonify(question = question,answer=answer)

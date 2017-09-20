@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 	<head>
-		<title>沪牌第一枪模拟拍牌系统</title>
+		<title>小鲜肉代拍模拟拍牌系统</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- Include CSS to eliminate any default margins/padding and set the height of the html element and
 		     the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as
@@ -11,7 +11,8 @@
 		<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 		<script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script>
-	var answer={{answer}}
+	var answer=0;
+	var question=0;    //问题和答案
 </script>
 
 		<script src="{{url_for('static',filename='js/moni.js')}}"> </script>
@@ -31,15 +32,25 @@
 			 JavaScript and Flash plug-in support is available. The div is initially hidden so that it doesn't show
 			 when JavaScript is disabled.
 		-->
+
+
+
 		<div id="outer" >
 			<div style="height:169px;">
-				<h2 style="padding: 20px 0px 10px 0;margin-top: 0px;text-align: center;"><font color="white">沪牌第一枪模拟拍牌系统</font></h2>
+				<h2 style="padding: 25px 0px 10px 0;margin-top: 0px;margin-bottom:15px;text-align: center;"><font color="white">小鲜肉代拍全真模拟系统</font></h2>
+						<div>
+			<span class="btn btn-info" style="margin-left:28px;margin-right:25px;font-size:20px">  查看教程  </span>
+			<span class="btn btn-success" style="margin-left:28px;margin-right:25px;font-size:20px">   验证码练习  </span>
+			<span class="btn btn-warning" style="margin-left:28px;margin-right:25px;font-size:20px">  参加考核  </span>
+			<span class="btn btn-danger" style="margin-left:28px;margin-right:25px;font-size:20px"> 返回主页  </span>
+				</div>
 			</div>
+
 		<!--</div>
 		<div id='mainbox'>-->
 			<div class='leftmainbox'>
 				<ul class='toptext'>
-					<li>沪牌第一枪模拟投拍拍卖会</li>
+					<li>小鲜肉代拍模拟投拍拍卖会</li>
 					<li>模拟投放额度:9951</li>
 					<li>目前已投标人数</li>
 					<li>拍卖会起止时间:10:30至11:30</li>
@@ -86,10 +97,9 @@
 			<!--隐藏对话框  验证码输入框-->
 			<div id="dialog-form">
 				<div class='identify'>
-					<div></div>
-					<img src={{url_for('static',filename=yan)}} class="yanzhengma"></img>
+					<div id="yanzhengma"></div>
 					<input type="text" id='inputyanzhengma' class='inputyanzhengma' checked="checked">
-					<p class="question">请输入苹果行数字</p>
+					<p class="question" id="question"></p>
 					<button class="confirm"></button>
 					<button class="cancel"></button>
 				</div>
@@ -169,7 +179,7 @@
 			</div>
 			<div id="final-info">
 				<div class='final-info'>
-					<div class='finaltext'>本次拍牌结束啦,请关注我们微信公众号——沪牌第一枪。<br>任何问题可以联系我们</div>
+					<div class='finaltext'>本次拍牌结束啦,请关注我们小鲜肉代拍。<br>任何问题可以联系我们</div>
 
 				</div>
 			</div>

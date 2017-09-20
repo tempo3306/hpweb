@@ -215,7 +215,9 @@ class Yanzhengma(db.Model):
     __tablename__="yanzhengma"
     id=db.Column(db.Integer,primary_key=True)
     picture=db.Column(db.String)  #路径名
+    question=db.Column(db.String)  #问题
     answer=db.Column(db.String)   #答案
+    type=db.Column(db.Integer)  #类别s    51拿来的类别1
 
 
 #继承自Flask-Login 中的AnonymousUserMixin 类，并将其设为用户未登录时current_user 的值
