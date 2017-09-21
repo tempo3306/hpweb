@@ -7,14 +7,15 @@
 			var price_torrent = 0
 
 			var delay = 2 //随机动态延迟
-			var no_image = 90 //随机出现验证码刷新失败，出现验证码的概率
+			var no_image=Math.random()*5+55;   //95%+的概率需要刷新验证码
 			var userprice1 = 0 //用户出价
 			var userprice2=0
 			count=0  //出价次数
+
 			var usertime1=0 //用户出价时间第一次
 			var usertime2=0 //用户出价时间第二次
 			var interval = 4 //4秒内不能查看验证码
-			var query_time = 0 //最近一次查看验证码的时间
+			var query_time = -10 //最近一次查看验证码的时间
 			var accept_time = 60 //接受时间
 			var running = true //是否进行中
             var usercode=0 //用户验证码
@@ -169,6 +170,7 @@
 				usertime2=0;
 				userprice1=0;
 				userprice2=0;
+				query_time=-10;   //查询间隔
 				//随机创建随机数
 				lowestprice = 87000 + parseInt((Math.random() - 0.35) * 40) * 100;
 //系统模块
@@ -186,6 +188,8 @@
             var time_need3=2      //time_cut之后  + time_torrent*n   n为当前时间与时间种子差值
 //随机显示状态
             var view_torrent=Math.random()*10
+//随机不显示验证码
+            var no_image=Math.random()*5+55;   //95%+的概率需要刷新验证码
 			}
 
 //产生一个进度条，模拟读秒
@@ -243,16 +247,16 @@
 //判定是否刷出来验证码
 			function No_image() {
 				var random_no = 100 * Math.random();
-				if(random_no > no_image) {
-					return False
+				if(random_no < no_image) {
+					return false    //不出验证码
 				} else {
-					return True
+					return true
 				}
 			}
-			//判定是否可以查看验证码
+//判定是否可以查看验证码
 			function Interval() {
-				time1 = realsecond - query_time;
-				if(time1 >= realsecond) {
+				time1 = realsecond - query_time;   //间隔时间  4秒
+				if(time1 >= 4) {
 					return true
 				} else {
 					return false
@@ -275,6 +279,21 @@
 					return false
 				}
 			}
+//更新验证码及弹出窗口
+var id=Math.floor(Math.random()*100+1);
+var path_yanzhengma="/yanzhengma/"+id;
+var path_answer="/answer/"+id;
+            function GetYanzhengma(){
+            var id=Math.floor(Math.random()*100+1);
+            var path_yanzhengma="/yanzhengma/"+id;
+            var path_answer="/answer/"+id;
+            $.get(path_answer,null,function(ret){question=ret.question;answer=ret.answer;$('#question').text(question);});  //获取答案和问题
+            $("#yanzhengma").load(path_yanzhengma);//加载验证码
+ 					    }
+
+
+
+
 
 //绑定+-按纽功能
 			$(document).ready(function() {
@@ -583,7 +602,7 @@
 				
 				
 				$(".middleconfirm").button().click(function() {
-					$("#info-form").dialog("close");
+					$("#info-tooquick").dialog("close");
 				});
 				$(".middleconfirm_wrongcode").button().click(function() {
 					$("#info-wrongcode").dialog("close");
@@ -619,25 +638,36 @@
 					}
 				});
 
+                $(".refresh").button().click(function() {
+                GetYanzhengma();
+                $(".refresh").attr("disabled","disabled");
+				});
+
+$(".refresh").attr("disabled","disabled");
+
 				$("#chujia").button().click(function() {
 					var price100 = Price_confirm();
-					var interval1 = Interval();
-					if(price100 && interval1) {
-					var id=Math.floor(Math.random()*100+1);
-					var path_yanzhengma="/yanzhengma/"+id;
-					var path_answer="/answer/"+id;
+					if (Interval())
+					    {query_time=realsecond;   //更新查询时间
+                        if(price100 ) {
 
-					$.get(path_answer,null,function(ret){question=ret.question;answer=ret.answer;$('#question').text(question);});  //获取答案和问题
-
- 					    $("#yanzhengma").load(path_yanzhengma);//加载验证码
-						$("#dialog-form").dialog("open");
-					} else if(!(interval1)) {
+                            $("#dialog-form").dialog("open");
+                            if(No_image())
+                            {path="/yanzhengma_refresh";
+                            $("#yanzhengma").load(path);
+                            $(".refresh").attr("disabled",false);
+                            } //加载刷新
+                            else
+                            {GetYanzhengma();
+                            }
+                        }
+                        else {
+                        $("#info-wrongprice").dialog("open")}}
+					else {
 						$("#info-tooquick").dialog("open")
-					} else if(!(price100)) {
-						$("#info-wrongprice").dialog("open")
-					};
+					}})
 
-				});
+
 				$(".middleconfirm_wrongcode").button().click(function() {
 					$("#info-wrongcode").dialog("close");
 				});
@@ -676,6 +706,10 @@
 					$("#price-wrong").dialog("close");
 					$("#dialog-form").dialog("close");
 				});
+				$(".middleconfirm_tooquick").button().click(function() {
+					$("#info-tooquick").dialog("close");
+				});
+
 				$(".middleconfirmsuccess").button().click(function() {
 //					history.go(0);
 $('#final-info').dialog("close");

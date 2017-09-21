@@ -86,5 +86,11 @@ from flask import jsonify
 def answer(id):
     yanzhengma=Yanzhengma.query.get(id)
     answer=yanzhengma.answer
+    answer=str(int(answer))
     question=yanzhengma.question
     return jsonify(question = question,answer=answer)
+
+@main.route('/yanzhengma_refresh',methods=['GET'])
+def yanzhengma_refresh():
+    yan='img/moni_fresh.png'
+    return render_template("yanzhengma.html",yan=yan)

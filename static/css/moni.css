@@ -231,7 +231,21 @@
 				font-size: 14px;
 				font-family: "宋体";
 			}
-			
+
+			.refresh {
+                background-color:transparent;
+				position: absolute;
+				top: 180px;
+				margin: 0 auto;
+				padding: 0px;
+				left: 65px;
+				width: 113px;
+				height: 27px;
+				border: none;
+				outline: none;
+			}
+
+
 			#b1 {
 				background-color: transparent;
 				position: absolute;
