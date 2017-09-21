@@ -627,8 +627,7 @@
 					var path_yanzhengma="/yanzhengma/"+id;
 					var path_answer="/answer/"+id;
 
-					$.get(path_answer,null,function(ret){question=ret.question;answer=ret.answer;});  //获取答案和问题
-					$('#question').text(question);
+					$.get(path_answer,null,function(ret){question=ret.question;answer=ret.answer;$('#question').text(question);});  //获取答案和问题
 
  					    $("#yanzhengma").load(path_yanzhengma);//加载验证码
 						$("#dialog-form").dialog("open");
