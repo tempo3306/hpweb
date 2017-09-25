@@ -31,7 +31,7 @@
 			var pt2 = [];
 	
 			var xp=window.screen.width;var yp=window.screen.height;
-			$(document).ready(function(){$('body').css({"postion":"relative","left":xp/2-450,"top":0})});
+			$(document).ready(function(){$('body').css({"postion":"relative","left":"15px","top":0})});
 			//获取主背景位置
 			
 			lowestprice = 88000 + parseInt((Math.random() - 0.5) * 40) * 100;
