@@ -1,4 +1,4 @@
-			var lowestprice = 90000 //此时的最低成交价
+			var lowestprice = 88000; //此时的最低成交价
 			var realsecond = 0 //真实秒钟
 			var viewsecond = 0 //显示秒钟
 			var accept_second = 0 //最低成交价接受时间
@@ -34,7 +34,7 @@
 			$(document).ready(function(){$('body').css({"postion":"relative","left":"15px","top":0})});
 			//获取主背景位置
 			
-			lowestprice = 90000 + parseInt((Math.random() - 0.5) * 40) * 100;
+			lowestprice = 88000 + parseInt((Math.random() - 0.5) * 40) * 100;
 //-----------------------------------------------------------------------------------------------
 //系统模块
 //随机种子，影响跳价情况
@@ -70,27 +70,6 @@
 			function selectFromMess() {
     return arguments[Math.floor(Math.random() * arguments.length)]
 }
-//复制粘贴
-function copy()
-{
-  var obj=document.getElementById("txarea");
-  window.clipboardData.setData("Text",obj.value);//设置数据
-    alert("复制成功");
-}
-function paste() {
-  var clipboard = window.clipboardData.getData("Text");
-  clipboard == null ? alert('no data') : $(".inputyanzhengma").value = clipboard;
-}
-$(document).keydown(function(event){
-　　　　if(event.keyCode == 13){
-//　　　　　　alert('你按下了Enter');
-          $('.userwriteprice').val(98000);
-　　　　}
-　　});
-//    //IE
-//    if (window.clipboardData) {
-//        return window.clipboardData.getData("Text");
-//    }
 
 //执行功能
 			setInterval("Calculate_time()", 100);
@@ -105,7 +84,7 @@ $(document).keydown(function(event){
 					if(realsecond<40){
 					if(price_grow <= price_limit1) {
 						lowestprice = lowestprice + 100;
-						pt1.push(lowestprice);
+						pt1.push(lowestprice);-
 						pt2.push(realsecond);
 					}}
                     else if(realsecond>=40&&realsecond<50){
@@ -117,7 +96,7 @@ $(document).keydown(function(event){
                     }
                     else{
 					if(price_grow <= price_limit3) {
-//						lowestprice = lowestprice + 100;
+						lowestprice = lowestprice + 100;
 						pt1.push(lowestprice);
 						pt2.push(realsecond);
 					}
@@ -671,9 +650,8 @@ $(".refresh").attr("disabled","disabled");
 					if (Interval())
 					    {query_time=realsecond;   //更新查询时间
                         if(price100 ) {
+
                             $("#dialog-form").dialog("open");
-                            var userprice0=$(".userwriteprice").val();
-                            $("#userprice").text("您的出价为："+userprice0+"元")
                             if(No_image())
                             {path="/yanzhengma_refresh";
                             $("#yanzhengma").load(path);
@@ -745,5 +723,3 @@ Reset();
 				});
 
 			});
-
-
