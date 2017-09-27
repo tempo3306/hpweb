@@ -628,7 +628,7 @@ def rules():
     if current_user.is_anonymous:
         return redirect(url_for('auth.login',next='/rules'))
     else:
-        return render_template('/create/rules.html')
+        return render_template('/create/coursestudy.html')
 
 
 @main.route('/coursestudy', methods=['GET','POST'])
@@ -643,6 +643,6 @@ def softwarestudy():
     if current_user.is_anonymous:
         return redirect(url_for('auth.login', next='/softwarestudy'))
     else:
-        return render_template('/create/softwarestudy.html')
+        return render_template('/create/coursestudy.html')
 
 
