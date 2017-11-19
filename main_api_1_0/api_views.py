@@ -18,10 +18,10 @@ def userconfirm():
     if user:
         result=user.verify_password(passwd)
         if result:
-            return jsonify({'result':'success',
+            return jsonify({'result':'login success',
                             'url_dianxin':'www.baidu.com',
                             'url_nodianxin':'www.qq.com'})
         else:
-            return jsonify({'result':'failure'})
+            return jsonify({'result':'wrong password'})
     else:
-        return jsonify({'result': 'failure'})
+        return jsonify({'result': 'wrong account'})
