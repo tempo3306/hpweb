@@ -18,7 +18,7 @@ def userconfirm():
     import time
     time1 = time.localtime(time.time())
     time2 = time.strftime("%Y%m%d", time1)
-    today_date = "time2" + "01"
+    today_date = time2 + "01"
     url_dianxin = "https://paimai2.alltobid.com/bid/%s/login.htm" % today_date
     url_nodianxin = "https://paimai.alltobid.com/bid/%s/login.htm" % today_date
 
