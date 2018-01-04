@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        <head>
+<title>小鲜肉模拟拍牌系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<!-- Include CSS to eliminate any default margins/padding and set the height of the html element and
+     the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as
+     the percentage of the height of its parent container, which has to be set explicitly.  Initially,
+     don't display flashContent div so it won't show if JavaScript disabled.
+-->
+
+<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script>
+    var answer = 0;
+    var question = 0;    //问题和答案
+</script>
+
+<script src="{{url_for('static',filename='js/practice.js')}}"></script>
+
+<link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="{{url_for('static',filename='css/moni.css')}}" rel="stylesheet">
+<!-- Enable Browser History by replacing useBrowserHistory tokens with two hyphens -->
+<!-- BEGIN Browser History required section -->
+
+<!-- END Browser History required section -->
+<!-- Latest compiled and minified CSS -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-zh_CN.min.js"></script>
+
+
+</head>
+
+<style>
+
+
+</style>
+
+<body style="left=0">
+<div class="container" style="position: relative;margin:0 auto;left:20%;top:10%;">
+    <div class='identify'>
+        <div id="userprice">验证码随机练习模式</div>
+        <select class="form-control" id="cofirm_select" onchange="selectOnchang(this)">
+            <option>无辅助确认</option>
+            <option>回车确认</option>
+            <option>按E确认</option>
+        </select>
+    </div>
+    <div id="yanzhengma"></div>
+    <input type="text" id='inputyanzhengma' class='inputyanzhengma' checked="checked">
+    <p class="question" id="question"></p>
+    <button class="refresh" id="refresh"></button>
+    <button class="confirm" id="confirm"></button>
+    <button class="cancel" id="cancel"></button>
+</div>
+
+<script>
+    var choice = 0;  //初始为无辅助
+    var time1 = 0;  //第一个时间
+    var time2 = 0; //第二个时间
+    var usetime = 0; //使用时间
+    function selectOnchang(obj) {
+//获取被选中的option标签选项
+        choice = obj.selectedIndex;
+        var a = document.getElementsByTagName("input");
+        a[0].focus();
+    }
+
+    $(document).ready(function () {
+        GetYanzhengma();
+        var a = document.getElementsByTagName("input");
+        a[0].focus();
+    })
+
+</script>
+
+
+</body>
+
+</html>

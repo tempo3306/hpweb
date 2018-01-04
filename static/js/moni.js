@@ -117,7 +117,7 @@ $(document).keydown(function(event){
                     }
                     else{
 					if(price_grow <= price_limit3) {
-//						lowestprice = lowestprice + 100;
+						lowestprice = lowestprice + 100;
 						pt1.push(lowestprice);
 						pt2.push(realsecond);
 					}
@@ -196,7 +196,7 @@ $(document).keydown(function(event){
 				lowestprice = 87000 + parseInt((Math.random() - 0.35) * 40) * 100;
 //系统模块
 //随机种子，影响跳价情况
-            var x1=Math.random() < 0.5 ? 1 : (-1)   //随机+-
+            var x1=Math.random() < 0.5 ? 1 : (-1)     //随机+-
             price_torrent = parseInt((Math.random()) * 20)*x1; //20档跳价
 			var price_limit1 = 10+price_torrent/4;  //0-40     10%之间概率跳价
 			var price_limit2 = 35+price_torrent/2;  //40~50    35%之间概论跳价
@@ -336,7 +336,7 @@ var path_answer="/answer/"+id;
 				$("#b4").click(function() {
 					$(".userwriteprice").val(lowestprice + 300);
 				})
-			});
+			});4444
 			$(document).ready(function() {
 				$("#b5").click(function() {
 					$(".userwriteprice").val(lowestprice + 200);
@@ -344,7 +344,10 @@ var path_answer="/answer/"+id;
 			});
 			$(document).ready(function() {
 				$("#b6").click(function() {
-					$(".userwriteprice").val(lowestprice + 100);
+					// $(".userwriteprice").val(lowestprice + 100);
+					var te=window.clipboardData.getData("text");
+					$(".userwriteprice").val(te);
+
 				})
 			});
 			//绑定加价按纽功能
@@ -607,7 +610,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								"top": "169px",
-								"left": "22px",
+								"left": "22px"
 //								"top": (yp/2-215).toString(),
 //								"left": (xp/2-428).toString()
 							});　　　　

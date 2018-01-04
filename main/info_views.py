@@ -94,3 +94,7 @@ def answer(id):
 def yanzhengma_refresh():
     yan='img/moni_fresh.png'
     return render_template("yanzhengma.html",yan=yan)
+
+@main.route('/Practice',methods=['GET'])
+def Practice():
+    return render_template("Practice.html")
