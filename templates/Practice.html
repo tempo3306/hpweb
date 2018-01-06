@@ -39,13 +39,19 @@
 </head>
 
 <style>
-
-
+#bt1 {position: absolute;top:-10%;left:8%;background: #00aeff;border-color: #00aeff}
+#bt2 {position: absolute;top:-10%;left:17%;background: #5e5e5e;border-color:#5e5e5e}
+#bt3 {position: absolute;top:-10%;left:26%;background: #5e5e5e;border-color:#5e5e5e}
 </style>
 
 <body style="left=0">
+
 <div class="container" style="position: relative;margin:0 auto;left:20%;top:10%;">
+
     <div class='identify'>
+        <span id="bt1" class="btn btn-success" >自由练习</span>
+        <span id="bt2" class="btn btn-success" >测试模式</span>
+        <span id="bt3" class="btn btn-success" >考核模式</span>
         <div id="userprice">验证码随机练习模式</div>
         <select class="form-control" id="cofirm_select" onchange="selectOnchang(this)">
             <option>无辅助确认</option>
@@ -66,6 +72,7 @@
     var time1 = 0;  //第一个时间
     var time2 = 0; //第二个时间
     var usetime = 0; //使用时间
+    var mode = 0;  //模式 0:自由  1：测试  2：考核
     function selectOnchang(obj) {
 //获取被选中的option标签选项
         choice = obj.selectedIndex;

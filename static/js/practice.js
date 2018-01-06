@@ -94,3 +94,36 @@ $(document).keydown(function (event) {
     }
 });
 
+//设计  bt1 bt2 bt3功能
+function gray(btn){
+    btn.css({'background': '#5e5e5e','border-color': '#5e5e5e'})
+}
+function blue(btn){
+    btn.css({'background': '#00aeff','border-color': '#00aeff'})
+}
+$(document).ready(function(){
+    $('#bt1').click(function(){
+        blue($('#bt1'));
+        gray($('#bt2'));
+        gray($('#bt3'));
+        mode=0;
+    })
+})
+$(document).ready(function(){
+    $('#bt2').click(function(){
+        blue($('#bt2'));
+        gray($('#bt1'))
+        gray($('#bt3'))
+        mode=1;
+    })
+})
+$(document).ready(function(){
+    $('#bt3').click(function(){
+        blue($('#bt3'));
+        gray($('#bt1'));
+        gray($('#bt2'));
+        mode=2;
+    })
+})
+
+

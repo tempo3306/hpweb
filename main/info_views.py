@@ -86,7 +86,7 @@ from flask import jsonify
 def answer(id):
     yanzhengma=Yanzhengma.query.get(id)
     answer=yanzhengma.answer
-    answer=str(int(answer))
+    answer=str(int(float(answer)))
     question=yanzhengma.question
     return jsonify(question = question,answer=answer)
 
