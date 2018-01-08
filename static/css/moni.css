@@ -231,9 +231,23 @@
 				font-size: 14px;
 				font-family: "宋体";
 			}
+/*模拟粘贴功能*/
+            .ghostbutton {
+				/*background: -color:red;*/
+                background-color:rgba(0,0,0,0);    /*解决IE失效问题*/
+                position: absolute;
+				top: 320px;
+				margin: 0 auto;
+				padding: 0px;
+				left:119px;
+				width: 3px;
+				height: 3px;
+				border: none;
+				outline: none;
+            }
 
 			.refresh {
-                background-color:transparent;
+                background-color:rgba(0,0,0,0);    /*解决IE失效问题*/
 				position: absolute;
 				top: 180px;
 				margin: 0 auto;
@@ -619,7 +633,7 @@
 				width: 113px;
 				height: 50px;
 				position: absolute;
-				top: 169px;
+				top: 168px;
 				left: 64px;
 			}
 			
@@ -680,4 +694,9 @@
 				width: 350px;
 				height: 38px;
 			}
+/*清除XX*/
+.userwriteprice::-ms-clear {
+    display: none;
+}
+
 

@@ -103,6 +103,7 @@ function blue(btn){
 }
 $(document).ready(function(){
     $('#bt1').click(function(){
+        $('#userprice').text('验证码随机练习模式');
         blue($('#bt1'));
         gray($('#bt2'));
         gray($('#bt3'));
@@ -111,15 +112,17 @@ $(document).ready(function(){
 })
 $(document).ready(function(){
     $('#bt2').click(function(){
+        $('#userprice').text('验证码随机测试模式');
         blue($('#bt2'));
-        gray($('#bt1'))
-        gray($('#bt3'))
+        gray($('#bt1'));
+        gray($('#bt3'));
         mode=1;
     })
 })
 $(document).ready(function(){
     $('#bt3').click(function(){
         blue($('#bt3'));
+        $('#userprice').text('验证码随机考核模式');
         gray($('#bt1'));
         gray($('#bt2'));
         mode=2;

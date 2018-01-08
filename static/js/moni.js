@@ -6,6 +6,8 @@
 			var time_torrent = 10 //随机种子，影响时间显示情况
 			var price_torrent = 0
 
+			var answer=0;
+			var question=0;    //问题和答案
 			var delay = 2 //随机动态延迟
 			var no_image=Math.random()*5+55;   //95%+的概率需要刷新验证码
 			var userprice1 = 0 //用户出价
@@ -344,7 +346,11 @@ var path_answer="/answer/"+id;
 			});
 			$(document).ready(function() {
 				$("#b6").click(function() {
-					// $(".userwriteprice").val(lowestprice + 100);
+					$(".userwriteprice").val(lowestprice + 100);
+				})
+			});
+			$(document).ready(function() {
+				$(".ghostbutton").click(function() {
 					var te=window.clipboardData.getData("text");
 					$(".userwriteprice").val(te);
 
