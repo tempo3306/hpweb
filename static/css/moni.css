@@ -1,7 +1,7 @@
 			body {
 				height: 100%;
 				width:100%;
-				left:0;
+				left:10px;
 			}
 			
 			body {
@@ -16,7 +16,9 @@
 	    width:900px;
 	    height:705px;
 	    position: absolute;
-	    top:0px}
+	    top:0px;
+			left: 10px;
+		}
 
 		#mainbox{
 				text-align: center;
@@ -633,8 +635,8 @@
 				width: 113px;
 				height: 50px;
 				position: absolute;
-				top: 168px;
-				left: 64px;
+				top: 172px;
+				left: 62px;
 			}
 			
 			.inputyanzhengma {
@@ -670,7 +672,7 @@
 			p.question {
 				position: absolute;
 				font-size: 15px;
-				top: 115px;
+				top: 120px;
 				left: 32px;
 				color: #050505;
 				font-family: "宋体";

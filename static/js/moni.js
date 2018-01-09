@@ -387,7 +387,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 								　　　　　　
 							});　　　　
 						}
@@ -410,7 +410,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 								　　　　　　
 							});　　　　
 						}
@@ -433,7 +433,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 								　　　　　　
 							});　　　　
 						}
@@ -456,7 +456,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								"top": "237px", //设置弹出框距离是页面顶端下的200px
-								"left": "428px" //设置弹出框距离是页面顶端下的200px
+								"left": "438px" //设置弹出框距离是页面顶端下的200px
 							});　　　　
 						}
 					}
@@ -478,7 +478,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 							});　　　　
 						}
 					}
@@ -500,7 +500,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 							});　　　　
 						}
 					}
@@ -522,7 +522,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 							});　　　　
 						}
 					}
@@ -544,7 +544,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 							});　　　　
 						}
 					}
@@ -566,7 +566,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 								　　　　　　
 							});　　　　
 						}
@@ -590,7 +590,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 							});　　　　
 						}
 					}
@@ -661,7 +661,7 @@ var path_answer="/answer/"+id;
 							$(this).css({　　　　　　　　
 								"position": "absolute",
 								　　　　　　　　"top": "237px", //设置弹出框距离是页面顶端下的200px
-								　　　　　　　　"left": "428px" //设置弹出框距离是页面顶端下的200px
+								　　　　　　　　"left": "438px" //设置弹出框距离是页面顶端下的200px
 								　　　　　　
 							});　　　　
 						}
