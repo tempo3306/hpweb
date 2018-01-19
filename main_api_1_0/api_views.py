@@ -27,14 +27,19 @@ def userconfirm():
 
     username=request.args.get('username')
     passwd=request.args.get('passwd')
-    user=User.query.filter_by(username=username).first()  #判断用户是否存在
-    if user:
-        result=user.verify_password(passwd)
-        if result:
-            return jsonify({'result':'login success',
-                            'url_dianxin':url_dianxin,
-                            'url_nodianxin':url_nodianxin})
+    version=request.args.get('version')
+    print("fdsfd")
+    if version == '5.11s':
+        user=User.query.filter_by(username=username).first()  #判断用户是否存在
+        if user:
+            result=user.verify_password(passwd)
+            if result:
+                return jsonify({'result':'login success',
+                                'url_dianxin':url_dianxin,
+                                'url_nodianxin':url_nodianxin})
+            else:
+                return jsonify({'result':'wrong password'})
         else:
-            return jsonify({'result':'wrong password'})
+            return jsonify({'result': 'wrong account'})
     else:
-        return jsonify({'result': 'wrong account'})
+        return jsonify({'result': 'wrong version'})
