@@ -28,8 +28,8 @@ def userconfirm():
     username=request.args.get('username')
     passwd=request.args.get('passwd')
     version=request.args.get('version')
-    print("fdsfd")
-    if version == '5.11s':
+    debug=request.args.get("debug")
+    if version == '5.11s' or debug:
         user=User.query.filter_by(username=username).first()  #判断用户是否存在
         if user:
             result=user.verify_password(passwd)
